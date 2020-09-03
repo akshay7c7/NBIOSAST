@@ -2,7 +2,7 @@ using AutoMapper;
 using NBI.API.Dtos;
 using NBI.API.Models;
 
-namespace NBI.API
+namespace NBI.API.Helper
 {
     public class AUtomapperProfiles : Profile
     {

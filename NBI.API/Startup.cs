@@ -14,6 +14,12 @@ using AutoMapper;
 using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using NBI.API.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+
 
 namespace NBI.API
 {
@@ -29,16 +35,33 @@ namespace NBI.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            IdentityBuilder builder = services.AddIdentityCore<User>(opt =>
+            {
+                opt.Password.RequireDigit = false;
+                opt.Password.RequiredLength = 4;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireUppercase = false;
+            });
+
+            builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
+            builder.AddEntityFrameworkStores<DataContext>();
+            builder.AddRoleValidator<RoleValidator<Role>>();
+            builder.AddRoleManager<RoleManager<Role>>();
+            builder.AddSignInManager<SignInManager<User>>();
+
+            services.AddControllers(options => 
+            {
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            })
+            .AddNewtonsoftJson(opt=> 
+            {
+                opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
             services.AddDbContext<DataContext>(x=>x.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")
             ));
-            services.AddCors();
-            services.AddAutoMapper(typeof(Startup));
 
-            services.AddScoped<IAuthRepository, AuthRepository>();
-            services.AddScoped<IAdminMaintainRepository, AdminMaintainRepository>();
-            
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>{
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -50,7 +73,13 @@ namespace NBI.API
                         ValidateAudience = false
                     };
                 });
-            
+
+
+
+            services.AddCors();
+            services.AddAutoMapper(typeof(Startup));
+            services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IAdminMaintainRepository, AdminMaintainRepository>();
             
         }
 
@@ -81,10 +110,8 @@ namespace NBI.API
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());//sequence is imp here
             app.UseAuthentication();
             app.UseCors();
-
             app.UseRouting();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

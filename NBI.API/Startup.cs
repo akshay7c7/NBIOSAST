@@ -77,6 +77,7 @@ namespace NBI.API
 
 
             services.AddCors();
+            services.AddTransient<Seed>();
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IAdminMaintainRepository, AdminMaintainRepository>();

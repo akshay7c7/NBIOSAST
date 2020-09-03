@@ -1,0 +1,29 @@
+[
+    {
+        "UserName" : "akshay7c7",
+        "Password" : "akshay44",
+        "Name" : "Akshay",
+        "Email" : "akshaychauhan227@gmail.com",
+        "PhoneNumber" : "7977087720",
+        "City" : "Mumbai"
+
+    },
+    {
+        "UserName" : "sumeet7c7",
+        "Password" : "sumeet44",
+        "Name" : "Sumeet",
+        "Email" : "sumeet@gmail.com",
+        "PhoneNumber" : "7977087720",
+        "City" : "Delhi"
+
+    },
+    {
+        "UserName" : "praveen7c7",
+        "Password" : "praveen44",
+        "Name" : "Praveen",
+        "Email" : "praveen@gmail.com",
+        "PhoneNumber" : "9000017307",
+        "City" : "Pune"
+
+    }
+]

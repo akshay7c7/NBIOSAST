@@ -73,6 +73,14 @@ namespace NBI.API
                         ValidateAudience = false
                     };
                 });
+            
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AllAccess", policy=>policy
+                        .RequireRole("DriverCreater","BranchAdminCreater","AccountAdminCreater"));
+                options.AddPolicy("SupeAndAccountOnly", policy=>policy
+                        .RequireRole("DriverCreater","BranchAdminCreater","AccountAdminCreater"));
+            });
 
 
 

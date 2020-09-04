@@ -16,5 +16,6 @@ namespace NBI.API.Dtos
 
       
         public string City { get; set; }
+
     }
 }

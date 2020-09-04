@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NBI.API.Data;
@@ -15,10 +17,10 @@ namespace NBI.API.Controllers
 {
     [Route("api/[controller]")]   //api/users
     [ApiController]
+    [AllowAnonymous]
     public class UsersController : ControllerBase
     {
         private readonly IAdminMaintainRepository _repo;
-
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
 
@@ -29,7 +31,7 @@ namespace NBI.API.Controllers
             _repo = repo;
 
         }
-        [HttpGet("{id}", Name = "GetUser")]   // GET http://localhost:5000/api/users/2  ...   
+        [HttpGet("{id}", Name = "GetUser")]    
         public async Task<IActionResult> GetUser(int id)
         {
             var userDetailsFromRepo = await _repo.GetUser(id);
@@ -38,6 +40,18 @@ namespace NBI.API.Controllers
                 return NotFound("User not Found");
             }
             var userDetailsToShow = _mapper.Map<UserForDisplayDetailDto>(userDetailsFromRepo);
+            return Ok(userDetailsToShow);
+
+        }
+        [HttpGet(Name = "GetUsers")]    
+        public async Task<IActionResult> GetUsers()
+        {
+            var userDetailsFromRepo = await _repo.GetUsers();
+            if (userDetailsFromRepo == null)
+            {
+                return NotFound("User not Found");
+            }
+            var userDetailsToShow = _mapper.Map<List<UserForDisplayDetailDto>>(userDetailsFromRepo);
             return Ok(userDetailsToShow);
 
         }
@@ -66,24 +80,23 @@ namespace NBI.API.Controllers
 
         }
 
-        [HttpPut("{id}/editPassword")]  // api/users/6/editpassword
-        public async Task<IActionResult> PasswordChange(int id, PasswordChangeDto passwordChangeDto)
+        [HttpGet("usersWithRoles", Name = "GetUsersWithRoles")]
+        public async Task<IActionResult> GetUsersWithRolesHttp()
         {
-            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-            {
-                return Unauthorized();
-            }
-            var userFromRepo = await _repo.GetUser(id);
-            userFromRepo.PasswordHash = _userManager.PasswordHasher.HashPassword(userFromRepo ,passwordChangeDto.Password);
-            var result = await _userManager.UpdateAsync(userFromRepo);
-            if(!result.Succeeded)
-            {
-                return BadRequest("Could Not Change Password");
-            }
-            await _repo.SaveAll();
-            return Ok("Password reset successfully");
-
+            var users = await _repo.GetUsersWithRoles();
+            return Ok(users);
+            
         }
+
+        [HttpGet("userWithRole/{id}", Name = "GetUserWithRole")]
+        public async Task<IActionResult> GetUserWithRoleHtt(int id)
+        {
+            var users = await _repo.GetUserWithRole(id);
+            return Ok(users);
+            
+        }
+
+        
 
 
     }

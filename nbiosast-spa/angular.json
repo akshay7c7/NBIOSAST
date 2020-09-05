@@ -24,9 +24,20 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/vendor/fontawesome-free/css/all.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              
+              "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/vendor/jquery/jquery.min.js",
+              "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/vendor/jquery-easing/jquery.easing.min.js",
+              "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/vendor/datatables/jquery.dataTables.min.js",
+              "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/vendor/datatables/dataTables.bootstrap4.min.js",
+              "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/js/demo/datatables-demo.js",
+              "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/vendor/bootstrap/js/bootstrap.bundle.min.js",
+              "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/js/sb-admin-2.min.js"
+
+            ]
           },
           "configurations": {
             "production": {

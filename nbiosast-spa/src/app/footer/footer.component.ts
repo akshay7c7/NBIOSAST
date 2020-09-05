@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-footer',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  hide : boolean =true;
+  constructor(private authService : AuthService) { }
 
   ngOnInit() {
+
+    this.authService.loggingIn$
+    .subscribe(
+      data => {this.hide = data;}
+    )
   }
 
 }

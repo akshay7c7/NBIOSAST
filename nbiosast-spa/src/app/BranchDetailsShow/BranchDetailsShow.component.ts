@@ -12,4 +12,15 @@ export class BranchDetailsShowComponent implements OnInit {
   ngOnInit() {
   }
 
+  addBranchAdminMode = false;
+  AddBranchAdmin()
+  {
+    this.addBranchAdminMode=true;
+  }
+  cancelBranchCreation(creation : boolean)
+  {
+    this.addBranchAdminMode = creation;
+  }
+
+
 }

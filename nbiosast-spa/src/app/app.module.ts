@@ -13,9 +13,14 @@ import { AddDriverDetailsComponent } from './AddDriverDetails/AddDriverDetails.c
 import { ExpireCardDetailsComponent } from './ExpireCardDetails/ExpireCardDetails.component';
 import { BranchDetailsShowComponent } from './BranchDetailsShow/BranchDetailsShow.component';
 import { EditProfileComponent } from './EditProfile/EditProfile.component';
+import { RouterModule } from '@angular/router';
+import { appRoutes } from 'routes';
+import { LoginComponent } from './login/login.component';
+import { ForgotPasswordComponent } from './forgotPassword/forgotPassword.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [										
+  declarations: [												
     AppComponent,
       DashboardComponent,
       SidebarComponent,
@@ -26,11 +31,15 @@ import { EditProfileComponent } from './EditProfile/EditProfile.component';
       AddDriverDetailsComponent,
       ExpireCardDetailsComponent,
       BranchDetailsShowComponent,
-      EditProfileComponent
+      EditProfileComponent,
+      LoginComponent,
+      ForgotPasswordComponent
    ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]

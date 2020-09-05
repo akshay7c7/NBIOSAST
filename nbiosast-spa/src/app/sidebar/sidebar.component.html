@@ -1,7 +1,8 @@
+<div *ngIf="!hide">
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
   <!-- Sidebar - Brand -->
-  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" [routerLink]="['/dashboard']" routerLinkActive="active" >
     <div class="sidebar-brand-icon rotate-n-15">
       <i class="fas fa-laugh-wink"></i>
     </div>
@@ -13,61 +14,42 @@
 
   <!-- Nav Item - Dashboard -->
   <li class="nav-item active">
-    <a class="nav-link" href="index.html">
+    <a class="nav-link" [routerLink]="['/dashboard']">
       <i class="fas fa-fw fa-tachometer-alt"></i>
       <span>Dashboard</span></a>
   </li>
 
-  <!-- Divider -->
- 
-
-  <!-- Heading -->
-  
-
-  <!-- Nav Item - Pages Collapse Menu -->
- 
-
-  <!-- Nav Item - Utilities Collapse Menu -->
- 
-
-  <!-- Divider -->
   <hr class="sidebar-divider">
 
-  <!-- Heading -->
-  
 
-  <!-- Nav Item - Pages Collapse Menu -->
- 
-
-  <!-- Nav Item - Charts -->
  <li class="nav-item">
-    <a class="nav-link" href="addadmin.html">
+    <a class="nav-link" [routerLink] = "['/addaccount']">
       <i class="fas fa-fw fa-chart-area"></i>
       <span>Add New Admin</span></a>
   </li>
 
 
   <li class="nav-item">
-    <a class="nav-link" href="branchdetails.html">
+    <a class="nav-link" [routerLink]="['/branchdetails']" >
       <i class="fas fa-fw fa-chart-area"></i>
       <span>Add New Branch</span></a>
   </li>
 
   <!-- Nav Item - Tables -->
   <li class="nav-item">
-    <a class="nav-link" href="driverdetails.html">
+    <a class="nav-link" [routerLink]="['/adddriverdetails']" >
       <i class="fas fa-fw fa-table"></i>
       <span>Add Driver Details</span></a>
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="expire.html">
+    <a class="nav-link" [routerLink]="['/expirecards']">
       <i class="fas fa-fw fa-table"></i>
       <span>Expire Card Details</span></a>
   </li>
 
  <li class="nav-item">
-    <a class="nav-link" href="branchdetails.html">
+    <a class="nav-link">
       <i class="fas fa-fw fa-chart-area"></i>
       <span>Reports</span></a>
   </li>
@@ -81,3 +63,4 @@
   </div>
 
 </ul>
+</div>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../_services/auth.service';
+import { User } from '../_models/user';
 
 @Component({
   selector: 'app-topbar',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopbarComponent implements OnInit {
 
-  constructor() { }
+  
+  hide : boolean = true;
+  constructor(private authService : AuthService) { }
 
   ngOnInit() {
+
+    this.authService.loggingIn$
+    .subscribe(
+      data => {this.hide = data;}
+    )
   }
+
+
+  logout()
+  {
+    this.hide = !false;
+  }
+
+
 
 }

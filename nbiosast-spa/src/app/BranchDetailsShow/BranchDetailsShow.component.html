@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="!addBranchAdminMode">
 
   <!-- Page Heading -->
   
@@ -8,10 +8,9 @@
       <h6 class="m-0 font-weight-bold text-primary">Branch Details</h6>
     </div>
 
-    <div class="card-body">
-<a href="addbranch.html" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Add Branch</a>
-<br>
-<br>
+    <div  class="card-body">
+      <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" (click)="AddBranchAdmin()"><i class="fas fa-download fa-sm text-white-50"></i> Add Branch</a>
+      <br><br>
       <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
@@ -495,6 +494,11 @@
         </table>
       </div>
     </div>
+    
   </div>
 
+</div>
+
+<div *ngIf="addBranchAdminMode" class="container">
+  <app-AddBranchAdmin  (cancelBranchCreation)="cancelBranchCreation($event)"></app-AddBranchAdmin>
 </div>

@@ -8,15 +8,17 @@ import { AuthService } from '../_services/auth.service';
 })
 export class FooterComponent implements OnInit {
 
-  hide : boolean =true;
+  show : any;
   constructor(private authService : AuthService) { }
 
   ngOnInit() {
+    
+  }
 
-    this.authService.loggingIn$
-    .subscribe(
-      data => {this.hide = data;}
-    )
+  loggedIn()
+  {
+    this.show = this.authService.loggedIn();
+    return(this.show);
   }
 
 }

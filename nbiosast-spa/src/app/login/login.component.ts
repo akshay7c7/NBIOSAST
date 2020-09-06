@@ -9,22 +9,32 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
+  show : any;
   model : any = {};
 
   constructor(private authService : AuthService , private router : Router) { }
 
   ngOnInit() {
+
   }
 
   login()
   {
-    // this.authService.login(this.model)
-    // .subscribe(
-    //   next => {this.authService.HideSidebarTopBar(false)},
-    //   ()=> this.router.navigate(['/dashboard']));
-
-      this.authService.HideSidebarTopBar(false);
-
+    this.model.username = "akshay7c7";
+    this.model.password = "password"
+    this.authService.login(this.model)
+    .subscribe(
+      next => {
+        this.loggedIn();
+        this.router.navigate(['/dashboard']);
+        },
+      ()=> this.router.navigate(['/dashboard']));
   }
 
+  loggedIn()
+  {
+    this.show = this.authService.loggedIn();
+    return this.show;
+
+  }
 }

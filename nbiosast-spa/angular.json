@@ -29,6 +29,7 @@
             ],
             "scripts": [
               
+              "./node_modules/jquery/dist/jquery.min.js",
               "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/vendor/jquery/jquery.min.js",
               "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/vendor/jquery-easing/jquery.easing.min.js",
               "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/vendor/datatables/jquery.dataTables.min.js",

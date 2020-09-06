@@ -10,7 +10,7 @@ import { User } from '../_models/user';
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl = environment.apiUrl + 'auth';
+  baseUrl = environment.apiUrl + 'auth'; //http://localhost:5000/api/auth
   jwtHelper = new JwtHelperService();
   decodedToken : any;
   currentUser : User;
@@ -20,16 +20,17 @@ export class AuthService {
 
   login(model : any)
   {
-      return(this.http.post(this.baseUrl +'login',model)
+      return(this.http.post(this.baseUrl +'/login',model) 
       .pipe(
         map((response : any)=>{
           const user = response;
           if(user)
           {
-            localStorage.setItem('token',user.token);
+            localStorage.setItem('token', user.token);
             localStorage.setItem('user',JSON.stringify(user.user));
-            this.decodedToken = this.jwtHelper.decodeToken(user.Token);
-            this.currentUser = user.user;
+            this.decodedToken= this.jwtHelper.decodeToken(user.token);
+            this.currentUser= user.user;
+            console.log(this.decodedToken);
           }
         }
       )
@@ -62,6 +63,13 @@ export class AuthService {
   logout()
   {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    const token =  localStorage.getItem('token');
+    if(token===null)
+    {
+      return true;
+    }
+    return false;
   }
 
 

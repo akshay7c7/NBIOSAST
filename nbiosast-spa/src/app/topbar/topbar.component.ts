@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { User } from '../_models/user';
+import * as $ from "jquery";
+import { Router } from '@angular/router';
+import { time } from 'console';
 
 @Component({
   selector: 'app-topbar',
@@ -10,22 +13,31 @@ import { User } from '../_models/user';
 export class TopbarComponent implements OnInit {
 
   
-  hide : boolean = true;
-  constructor(private authService : AuthService) { }
+  show : any ;
+  constructor(public authService : AuthService, private router : Router) { }
 
   ngOnInit() {
 
-    this.authService.loggingIn$
-    .subscribe(
-      data => {this.hide = data;}
-    )
   }
 
+
+  loggedIn()
+  {
+    this.show = this.authService.loggedIn();
+    return(this.show);
+  }
 
   logout()
   {
-    this.hide = !false;
+    if(this.authService.logout())
+    {
+      this.router.navigate(['/login']);
+    }
+    //"$('#logoutModal').modal('hide');$('body').removeClass('modal-open');$('.modal-backdrop').remove();"
+    
   }
+
+  
 
 
 

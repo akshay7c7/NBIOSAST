@@ -4,6 +4,14 @@
         "Dtos",
         "Forupdatedto",
         "Fromrepo",
-        "fontawesome"
+        "addaccount",
+        "addbranchdetails",
+        "adddriverdetails",
+        "branchdetails",
+        "cpassword",
+        "editprofile",
+        "expirecards",
+        "fontawesome",
+        "topbar"
     ]
 }

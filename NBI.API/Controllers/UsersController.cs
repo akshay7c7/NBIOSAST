@@ -17,7 +17,6 @@ namespace NBI.API.Controllers
 {
     [Route("api/[controller]")]   //api/users
     [ApiController]
-    [AllowAnonymous]
     public class UsersController : ControllerBase
     {
         private readonly IAdminMaintainRepository _repo;

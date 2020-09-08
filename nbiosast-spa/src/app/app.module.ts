@@ -19,6 +19,7 @@ import { appRoutes } from 'routes';
 import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgotPassword/forgotPassword.component';
 import { HttpClientModule } from '@angular/common/http';
+import { HasRoleDirective } from './_directives/hasRole.directive';
 
 @NgModule({
   declarations: [												
@@ -34,7 +35,8 @@ import { HttpClientModule } from '@angular/common/http';
       BranchDetailsShowComponent,
       EditProfileComponent,
       LoginComponent,
-      ForgotPasswordComponent
+      ForgotPasswordComponent,
+      HasRoleDirective
    ],
   imports: [
     BrowserModule,

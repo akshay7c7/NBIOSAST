@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
+import { AlertifyService } from '../_services/alertify.service';
 
 @Component({
   selector: 'app-login',
@@ -12,22 +13,27 @@ export class LoginComponent implements OnInit {
   show : any;
   model : any = {};
 
-  constructor(private authService : AuthService , private router : Router) { }
+  constructor(private authService : AuthService ,
+               private router : Router,
+               private alertify : AlertifyService) { }
 
   ngOnInit() {
-
+      if(this.loggedIn())
+      {
+        this.router.navigate(['/dashboard']);
+      }
   }
 
   login()
   {
-    this.model.username = "akshay7c7";
-    this.model.password = "password"
     this.authService.login(this.model)
     .subscribe(
       next => {
-        this.loggedIn();
-        this.router.navigate(['/dashboard']);
-        },
+        this.alertify.success('Logged in successfully');  }, 
+  
+      error => {
+        this.alertify.error('Failed to login');  },
+  
       ()=> this.router.navigate(['/dashboard']));
   }
 

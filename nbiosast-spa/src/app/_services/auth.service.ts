@@ -10,7 +10,7 @@ import { User } from '../_models/user';
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl = environment.apiUrl + 'auth'; //http://localhost:5000/api/auth
+  baseUrl = environment.apiUrl + 'auth/'; //http://localhost:5000/api/auth
   jwtHelper = new JwtHelperService();
   decodedToken : any;
   currentUser : User;
@@ -20,7 +20,7 @@ export class AuthService {
 
   login(model : any)
   {
-      return(this.http.post(this.baseUrl +'/login',model) 
+      return(this.http.post(this.baseUrl +'login',model) 
       .pipe(
         map((response : any)=>{
           const user = response;
@@ -70,6 +70,18 @@ export class AuthService {
       return true;
     }
     return false;
+  }
+
+  roleMatch(allowedRoles): boolean {
+    let isMatch = false;
+    const userRoles = this.decodedToken.role as Array<string>;
+    allowedRoles.forEach(element => {
+      if (userRoles.includes(element)) {
+        isMatch = true;
+        return;
+      }
+    });
+    return isMatch;
   }
 
 

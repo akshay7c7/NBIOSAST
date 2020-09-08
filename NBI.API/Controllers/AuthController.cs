@@ -19,10 +19,9 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.API.Controllers
-{
+{   [AllowAnonymous]
     [Route("api/[Controller]")]
     [ApiController]
-    [AllowAnonymous]
     public class AuthController : ControllerBase
     {
         private readonly IAdminMaintainRepository _repo;
@@ -49,6 +48,7 @@ namespace DatingApp.API.Controllers
             _signInManager = signInManager;
         }
 
+        [Authorize(Roles = "AccountAdminCreater")]
         [HttpPost("CreateAccountAdmin")]
         public async Task<IActionResult> CreateAccountAdmin(UserForCreateAdminDto userForCreateAdminDto)
         {

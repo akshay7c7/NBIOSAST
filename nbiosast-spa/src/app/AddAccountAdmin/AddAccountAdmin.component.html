@@ -1,49 +1,94 @@
 <div class="container-fluid">
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Add Account Admin Details</h6>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="createAccountAdminForm" (ngSubmit)="RegisterAccountAdmin()">
+        <div class="form-row">
 
-  <!-- Page Heading -->
- 
+          <div class="form-group col-md-4">
+            <label for="inputEmail4"> Name </label>
+            <input type="text" class="form-control" [ngClass]="{'is-invalid': createAccountAdminForm.get('name').errors && createAccountAdminForm.get('name').touched}"
+            formControlName="name" placeholder="Enter Name here" >
+            <div class="invalid-feedback" *ngIf="createAccountAdminForm.get('name').touched && createAccountAdminForm.get('name').hasError('required')">Name is required</div>
+          </div>
 
-<div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Add Admin Details</h6>
+        <div class="form-group col-md-4">
+          <label for="inputPassword4">City</label>
+          <input type="text" class="form-control" [ngClass]="{'is-invalid': createAccountAdminForm.get('city').errors && createAccountAdminForm.get('city').touched}"
+           formControlName="city" id="inputPassword4" placeholder="Enter city here">
+           <div class="invalid-feedback" *ngIf="createAccountAdminForm.get('city').touched && createAccountAdminForm.get('city').hasError('required')">City is required</div>
         </div>
-        <div class="card-body">
-          <form>
-<div class="form-row">
-<div class="form-group col-md-4">
-<label for="inputEmail4"> Name </label>
-<input type="email" class="form-control" id="inputEmail4" placeholder="Enter Name here">
-</div>
-<div class="form-group col-md-4">
-<label for="inputPassword4">Username</label>
-<input type="text" class="form-control" id="inputPassword4" placeholder="Enter Username here">
-</div>
-<div class="form-group col-md-4">
-<label for="inputPassword4">Email</label>
-<input type="email" class="form-control" id="inputPassword4" placeholder="Enter Email here">
-</div>
-</div>
-<div class="form-row">
-<div class="form-group col-md-4">
-<label for="inputEmail4"> Password </label>
-<input type="password" class="form-control" id="inputEmail4" placeholder="Enter password here">
-</div>
-<div class="form-group col-md-4">
-<label for="inputPassword4">Address</label>
-<input type="password" class="form-control" id="inputPassword4" placeholder="Enter  Address here">
-</div>
-<div class="form-group col-md-4">
-<label for="inputPassword4">City</label>
-<input type="password" class="form-control" id="inputPassword4" placeholder="Enter city here">
-</div>
-</div>
 
+          <div class="form-group col-md-4">
+            <label for="inputPassword4">Email</label>
+            <input type="email" class="form-control" [ngClass]="{'is-invalid': createAccountAdminForm.get('email').errors && createAccountAdminForm.get('email').touched}" 
+            formControlName="email" placeholder="Enter Email here">
+            <div class="invalid-feedback" *ngIf="createAccountAdminForm.get('email').touched && createAccountAdminForm.get('email').hasError('required')">Email is required</div>
+          </div>
 
-
-
-<button type="submit" class="btn btn-primary">Submit</button>
-<button type = "cancel" class = "btn btn-danger">Cancel</button>
-</form>
+          <div class="form-group col-md-4">
+            <label for="inputPassword4">Phone Number</label>
+            <input type="text"  class="form-control" [ngClass]="{'is-invalid': createAccountAdminForm.get('phoneNumber').errors && createAccountAdminForm.get('phoneNumber').touched}"
+             formControlName="phoneNumber" placeholder="Enter Phone number">
+             <div class="invalid-feedback" *ngIf="createAccountAdminForm.get('phoneNumber').touched && createAccountAdminForm.get('phoneNumber').hasError('required')">Phone Number is required</div>
+          </div>
         </div>
-      </div>
+
+        <div class="form-row">
+
+          <div class="form-group col-md-4">
+            <label for="inputPassword4">Username</label>
+            <input type="text" class="form-control" formControlName="username" [ngClass]="{'is-invalid': createAccountAdminForm.get('username').errors && createAccountAdminForm.get('username').touched}"placeholder="Enter Username here">
+            <div class="invalid-feedback">Please choose a username</div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="inputEmail4"> Password </label>
+            <input type="password" class="form-control" [ngClass]="{'is-invalid': createAccountAdminForm.get('password').errors && createAccountAdminForm.get('password').touched}" 
+            formControlName="password" placeholder="Password">
+
+            <div class="invalid-feedback" 
+              *ngIf="createAccountAdminForm.get('password').hasError('required')
+              && createAccountAdminForm.get('password').touched">
+              Password is required</div>
+
+              <div class="invalid-feedback" 
+              *ngIf="createAccountAdminForm.get('password').hasError('minlength')
+              && createAccountAdminForm.get('password').touched">
+              Password is too short</div>
+
+              <div class="invalid-feedback" 
+              *ngIf="createAccountAdminForm.get('password').hasError('maxlength')
+              && createAccountAdminForm.get('password').touched">
+              Password exceeds 8 character.</div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="inputEmail4"> Confirm Password </label>
+            <input type="password" class="form-control" 
+            [ngClass]="{'is-invalid': createAccountAdminForm.get('cpassword').errors
+                                    && createAccountAdminForm.get('cpassword').touched
+                                    || createAccountAdminForm.hasError('mismatch')
+                                    && createAccountAdminForm.get('cpassword').touched }"
+            formControlName="cpassword" placeholder="Confirm Password">
+
+             <div class="invalid-feedback"
+              *ngIf="createAccountAdminForm.get('cpassword').hasError('required')
+              && createAccountAdminForm.get('cpassword').touched">
+              Password is required.</div>
+
+              <div class="invalid-feedback"
+              *ngIf="createAccountAdminForm.hasError('mismatch')">
+              Password must match.</div>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type = "cancel" class = "btn btn-danger">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

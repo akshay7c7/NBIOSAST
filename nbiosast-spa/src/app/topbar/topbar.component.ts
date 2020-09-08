@@ -3,7 +3,6 @@ import { AuthService } from '../_services/auth.service';
 import { User } from '../_models/user';
 import * as $ from "jquery";
 import { Router } from '@angular/router';
-import { time } from 'console';
 
 @Component({
   selector: 'app-topbar',
@@ -16,8 +15,9 @@ export class TopbarComponent implements OnInit {
   show : any ;
   constructor(public authService : AuthService, private router : Router) { }
 
-  ngOnInit() {
-
+  ngOnInit()
+  {
+    
   }
 
 
@@ -33,8 +33,6 @@ export class TopbarComponent implements OnInit {
     {
       this.router.navigate(['/login']);
     }
-    //"$('#logoutModal').modal('hide');$('body').removeClass('modal-open');$('.modal-backdrop').remove();"
-    
   }
 
   

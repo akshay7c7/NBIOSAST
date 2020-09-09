@@ -14,6 +14,7 @@ namespace NBI.API.Interfaces
         Task<List<User>> GetUsers();
         Task<List<UsersWithRoles>> GetUsersWithRoles();
         Task<UsersWithRoles> GetUserWithRole(int id);
+        void SendWhatsappMessage(string username, string body);
         
         
     }

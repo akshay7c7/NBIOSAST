@@ -31,6 +31,7 @@ export class AuthService {
             this.decodedToken= this.jwtHelper.decodeToken(user.token);
             this.currentUser= user.user;
             console.log(this.decodedToken);
+            this.decodedToken.nam
           }
         }
       )
@@ -62,6 +63,8 @@ export class AuthService {
 
   logout()
   {
+    this.http.post(this.baseUrl+'logout/'+ this.decodedToken.nameid,{}).subscribe(
+      error=>{console.log(error)});
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     const token =  localStorage.getItem('token');

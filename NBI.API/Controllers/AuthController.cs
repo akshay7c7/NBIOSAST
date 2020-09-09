@@ -104,10 +104,12 @@ namespace DatingApp.API.Controllers
             {
                 var appUser = _userManager.Users.Where(u=>u.NormalizedUserName==userForLoginDto.UserName.ToUpper()).FirstOrDefault();
                 var userToReturn = _mapper.Map<UserForDisplayDetailDto>(appUser);
+                System.Console.WriteLine(user.UserName + " has logged in at "+ DateTime.Now.ToString("t") );
                 return Ok(new
                 {
                     token = GenerateJwtToken(appUser).Result,
                     user = userToReturn
+                    
                 });
             }
 
@@ -140,7 +142,7 @@ namespace DatingApp.API.Controllers
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var token =  tokenHandler.CreateToken(tokenDescriptor);
-
+            _repo.SendWhatsappMessage(user.Name ,"has logged in at");
             return tokenHandler.WriteToken(token);
 
 
@@ -166,32 +168,14 @@ namespace DatingApp.API.Controllers
 
         }
 
-        // [HttpPost("editRoles/{userName}")]         //api/auth/editroles/sarika7c7
-        // public async Task<IActionResult> EditRoles(string userName, RoleEditDto roleEditDto)
-        // {
-        //     var user = await _userManager.FindByNameAsync(userName);
-        //     var userRoles = await _userManager.GetRolesAsync(user);
-        //     var selectedRoles = roleEditDto.RolesNames;
-        //     selectedRoles = selectedRoles ?? new string[]{};
+        [HttpPost("logout/{id}")]
 
-        //     var result = await _userManager.AddToRolesAsync(user,selectedRoles.Except(userRoles));
-        //     if(!result.Succeeded)
-        //     {
-        //         return BadRequest(await _userManager.GetRolesAsync(user));
-        //     }
-
-        //     result = await _userManager.RemoveFromRolesAsync(user, userRoles.Except(selectedRoles));
-        //     if(!result.Succeeded)
-        //     {
-        //         return BadRequest(await _userManager.GetRolesAsync(user));
-        //     }
-
-        //     return Ok(await _userManager.GetRolesAsync(user));
-
-        // }
-
-        
-
+        public async Task<IActionResult> Logout(int id)
+        {
+            var userFromRepo = await _repo.GetUser(id);
+            _repo.SendWhatsappMessage(userFromRepo.Name,"has logged out");
+            return Ok("Logged out successfully");
+        }
 
         
     }

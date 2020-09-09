@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -7,6 +8,10 @@ using NBI.API.Data;
 using NBI.API.Interfaces;
 using NBI.API.Models;
 using NBI.API.HttoModels;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
+using Twilio;
+
 
 namespace NBI.API.Repository
 {
@@ -80,6 +85,20 @@ namespace NBI.API.Repository
             return await _context.SaveChangesAsync() > 0;
         }
 
-        
+        public void SendWhatsappMessage(string username, string bodyHere)
+        {
+            TwilioClient.Init(
+                "ACb252cc940bf685607e813059e7dd4ccb",
+                "48800abfc7dae8aeb9c34b7af038d256"
+            );
+
+            var message =  MessageResource.Create(
+                from :new PhoneNumber("whatsapp:+14155238886"),
+                to : new PhoneNumber("whatsapp:+919000017307"),
+                body: username + " "+ bodyHere + " "+DateTime.Now
+            );
+
+           
+        }
     }
 }

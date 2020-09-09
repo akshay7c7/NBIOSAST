@@ -24,11 +24,11 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css",
               "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/vendor/fontawesome-free/css/all.min.css"
             ],
             "scripts": [
-              
               "./node_modules/jquery/dist/jquery.min.js",
               "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/vendor/jquery/jquery.min.js",
               "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/vendor/jquery-easing/jquery.easing.min.js",
@@ -37,7 +37,6 @@
               "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/js/demo/datatables-demo.js",
               "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/vendor/bootstrap/js/bootstrap.bundle.min.js",
               "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/js/sb-admin-2.min.js"
-
             ]
           },
           "configurations": {
@@ -100,6 +99,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -131,6 +131,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "nbiosast-spa"
 }

@@ -20,9 +20,12 @@ import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgotPassword/forgotPassword.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HasRoleDirective } from './_directives/hasRole.directive';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material/material.module';
+import { ConfirmDialogueComponent } from './ConfirmDialogue/ConfirmDialogue.component';
 
 @NgModule({
-  declarations: [												
+  declarations: [													
     AppComponent,
       DashboardComponent,
       SidebarComponent,
@@ -36,7 +39,8 @@ import { HasRoleDirective } from './_directives/hasRole.directive';
       EditProfileComponent,
       LoginComponent,
       ForgotPasswordComponent,
-      HasRoleDirective
+      HasRoleDirective,
+      ConfirmDialogueComponent
    ],
   imports: [
     BrowserModule,
@@ -44,9 +48,12 @@ import { HasRoleDirective } from './_directives/hasRole.directive';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents : [ConfirmDialogueComponent]
 })
 export class AppModule { }

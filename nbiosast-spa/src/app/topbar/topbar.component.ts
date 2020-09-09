@@ -3,6 +3,7 @@ import { AuthService } from '../_services/auth.service';
 import { User } from '../_models/user';
 import * as $ from "jquery";
 import { Router } from '@angular/router';
+import { DialogService } from '../_services/dialog.service';
 
 @Component({
   selector: 'app-topbar',
@@ -13,7 +14,8 @@ export class TopbarComponent implements OnInit {
 
   
   show : any ;
-  constructor(public authService : AuthService, private router : Router) { }
+  constructor(public authService : AuthService, private router : Router,
+              private dialogService : DialogService) { }
 
   ngOnInit()
   {
@@ -29,10 +31,17 @@ export class TopbarComponent implements OnInit {
 
   logout()
   {
-    if(this.authService.logout())
-    {
-      this.router.navigate(['/login']);
-    }
+    this.dialogService.openConfirmDialog("Do you to Logout?").afterClosed().subscribe(
+      res=>{
+        if(res)
+        {
+          if(this.authService.logout())
+          {
+            this.router.navigate(['/login']);
+          }
+        }
+      }
+    )
   }
 
   

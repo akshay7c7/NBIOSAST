@@ -9,6 +9,7 @@ import { EditProfileComponent } from 'src/app/EditProfile/EditProfile.component'
 import { LoginComponent } from 'src/app/login/login.component';
 import { AuthGuard } from 'src/app/_guards/auth.guard';
 import { NgIf } from '@angular/common';
+import { EditPasswordComponent } from 'src/app/EditPassword/EditPassword.component';
 
 export const appRoutes : Routes = [
 
@@ -26,7 +27,9 @@ export const appRoutes : Routes = [
             {path : 'addbranchdetails' , component : AddBranchAdminComponent ,data: {roles: ['AccountAdminCreater','BranchAdminCreater']}},
             {path : 'adddriverdetails' , component : AddDriverDetailsComponent ,data: {roles: ['AccountAdminCreater','BranchAdminCreater','DriverCreater']}},
             {path : 'expirecards' , component : ExpireCardDetailsComponent},
-            {path : 'editprofile' , component : EditProfileComponent}
+            {path : 'editprofile' , component : EditProfileComponent},
+            {path : 'editpassword' , component : EditPasswordComponent},
+
         ]
     },
     {path : '**' , component : LoginComponent}

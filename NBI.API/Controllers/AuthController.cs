@@ -52,7 +52,16 @@ namespace DatingApp.API.Controllers
         [HttpPost("CreateAccountAdmin")]
         public async Task<IActionResult> CreateAccountAdmin(UserForCreateAdminDto userForCreateAdminDto)
         {
-
+            var checkuser = await _userManager.FindByNameAsync(userForCreateAdminDto.UserName);
+            if(checkuser!=null)
+            {
+                return BadRequest("Username already exists");
+            }
+            var checkuseremail = await _userManager.FindByEmailAsync(userForCreateAdminDto.Email);
+            if(checkuseremail!=null)
+            {
+                return BadRequest("Email already exists");
+            }
             var userToCreate = _mapper.Map<User>(userForCreateAdminDto);
             var result = await _userManager.CreateAsync(userToCreate, userForCreateAdminDto.Password);
             var userToReturn = _mapper.Map<UserForDisplayDetailDto>(userToCreate);
@@ -75,7 +84,16 @@ namespace DatingApp.API.Controllers
         [HttpPost("CreateBranchAdmin")]
         public async Task<IActionResult> CreateBranchAdmin(UserForCreateAdminDto userForCreateAdminDto)
         {
-
+            var checkuser = await _userManager.FindByNameAsync(userForCreateAdminDto.UserName);
+            if(checkuser!=null)
+            {
+                return BadRequest("Username already exists");
+            }
+            var checkuseremail = await _userManager.FindByEmailAsync(userForCreateAdminDto.Email);
+            if(checkuseremail!=null)
+            {
+                return BadRequest("Email already exists");
+            }
             var userToCreate = _mapper.Map<User>(userForCreateAdminDto);
             var result = await _userManager.CreateAsync(userToCreate, userForCreateAdminDto.Password);
             var userToReturn = _mapper.Map<UserForDisplayDetailDto>(userToCreate);
@@ -87,8 +105,9 @@ namespace DatingApp.API.Controllers
                 if(!result.Succeeded)
                 {
                     await _userManager.DeleteAsync(userFromRepo);
-                    return BadRequest("User Created but could not added roles");
+                    return BadRequest(result.Errors);
                 }
+                //_userManager.SendMailAsync("akshaychauhan227@gmail.com","akshay7c7@gmail.com","Welcome");
                 return CreatedAtRoute("GetUser", new { Controller = "Users", id = userToCreate.Id }, userToReturn);
             }
             return BadRequest(result.Errors);
@@ -99,12 +118,15 @@ namespace DatingApp.API.Controllers
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
             var user = await _userManager.FindByNameAsync(userForLoginDto.UserName);
+            if (user==null)
+            {
+                return Unauthorized("Username not found !");
+            }
             var result = await _signInManager.CheckPasswordSignInAsync(user,userForLoginDto.Password , false);
             if(result.Succeeded)
             {
                 var appUser = _userManager.Users.Where(u=>u.NormalizedUserName==userForLoginDto.UserName.ToUpper()).FirstOrDefault();
                 var userToReturn = _mapper.Map<UserForDisplayDetailDto>(appUser);
-                System.Console.WriteLine(user.UserName + " has logged in at "+ DateTime.Now.ToString("t") );
                 return Ok(new
                 {
                     token = GenerateJwtToken(appUser).Result,
@@ -113,7 +135,7 @@ namespace DatingApp.API.Controllers
                 });
             }
 
-            return Unauthorized();
+            return Unauthorized("Incorrect Password !");
         }
 
         private async Task<string> GenerateJwtToken(User user)
@@ -148,7 +170,7 @@ namespace DatingApp.API.Controllers
 
         }
         
-        [HttpPut("{id}/editPassword")]  // api/users/6/editpassword
+        [HttpPut("editPassword/{id}")]  // api/users/6/editpassword
         public async Task<IActionResult> PasswordChange(int id, PasswordChangeDto passwordChangeDto)
         {
             if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
@@ -173,7 +195,7 @@ namespace DatingApp.API.Controllers
         public async Task<IActionResult> Logout(int id)
         {
             var userFromRepo = await _repo.GetUser(id);
-            _repo.SendWhatsappMessage(userFromRepo.Name,"has logged out");
+            _repo.SendWhatsappMessage(userFromRepo.Name,"has logged out at");
             return Ok("Logged out successfully");
         }
 

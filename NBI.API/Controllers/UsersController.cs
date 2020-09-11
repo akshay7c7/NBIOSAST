@@ -17,6 +17,7 @@ namespace NBI.API.Controllers
 {
     [Route("api/[controller]")]   //api/users
     [ApiController]
+    [AllowAnonymous]
     public class UsersController : ControllerBase
     {
         private readonly IAdminMaintainRepository _repo;
@@ -88,7 +89,7 @@ namespace NBI.API.Controllers
         }
 
         [HttpGet("userWithRole/{id}", Name = "GetUserWithRole")]
-        public async Task<IActionResult> GetUserWithRoleHtt(int id)
+        public async Task<IActionResult> GetUserWithRoleHttp(int id)
         {
             var users = await _repo.GetUserWithRole(id);
             return Ok(users);

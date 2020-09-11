@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from '../_models/user';
 import { AuthService } from '../_services/auth.service';
-import { AlertifyService } from '../_services/alertify.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-AddAccountAdmin',
@@ -13,7 +14,8 @@ export class AddAccountAdminComponent implements OnInit {
 
   constructor(private fb : FormBuilder, 
               private authService : AuthService,
-              private alertify : AlertifyService) { }
+              private snackbar : MatSnackBar,
+              private router : Router) { }
   
   ngOnInit() {
 
@@ -53,16 +55,19 @@ export class AddAccountAdminComponent implements OnInit {
         this.user = Object.assign({},this.createAccountAdminForm.value)
         this.authService.registerAccountAdmin(this.user)
         .subscribe(
-          ()=>{this.alertify.success("Account Admin registered successfully.")},
-          error =>{this.alertify.error(error)}
+          ()=>{this.snackbar.open('Account Admin Created Successfully','',{duration : 1000});
+                this.createAccountAdminForm.reset();},
+          error =>{this.snackbar.open(error.error,'',{duration : 1000})}
         )
-    } 
-    else
-    {
-      console.log("Not valid");
     }
+
   }
 
+  Cancel()
+  {
+    this.createAccountAdminForm.reset();
+    this.router.navigate(['/dashboard']);
+  }
 
 
 

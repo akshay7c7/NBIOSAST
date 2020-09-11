@@ -4,6 +4,7 @@ import { User } from '../_models/user';
 import * as $ from "jquery";
 import { Router } from '@angular/router';
 import { DialogService } from '../_services/dialog.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-topbar',
@@ -14,7 +15,9 @@ export class TopbarComponent implements OnInit {
 
   
   show : any ;
-  constructor(public authService : AuthService, private router : Router,
+  constructor(public authService : AuthService, 
+              private router : Router, 
+              private snackbar : MatSnackBar,
               private dialogService : DialogService) { }
 
   ngOnInit()
@@ -37,6 +40,7 @@ export class TopbarComponent implements OnInit {
         {
           if(this.authService.logout())
           {
+            this.snackbar.open('Logged out successfully','',{duration: 1000})
             this.router.navigate(['/login']);
           }
         }

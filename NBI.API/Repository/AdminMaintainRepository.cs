@@ -95,7 +95,7 @@ namespace NBI.API.Repository
             var message =  MessageResource.Create(
                 from :new PhoneNumber("whatsapp:+14155238886"),
                 to : new PhoneNumber("whatsapp:+919000017307"),
-                body: username + " "+ bodyHere + " "+DateTime.Now
+                body: username + " "+ bodyHere + " "+DateTime.Now.ToString("dddd, dd MMMM") +" ,"+DateTime.Now.ToString("h:mm tt") 
             );
 
            

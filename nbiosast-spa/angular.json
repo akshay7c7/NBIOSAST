@@ -26,17 +26,21 @@
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css",
-              "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/vendor/fontawesome-free/css/all.min.css"
+              "src/assets/vendor/fontawesome-free/css/all.min.css"
             ],
             "scripts": [
-              "./node_modules/jquery/dist/jquery.min.js",
-              "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/vendor/jquery/jquery.min.js",
-              "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/vendor/jquery-easing/jquery.easing.min.js",
-              "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/vendor/datatables/jquery.dataTables.min.js",
-              "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/vendor/datatables/dataTables.bootstrap4.min.js",
-              "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/js/demo/datatables-demo.js",
-              "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/vendor/bootstrap/js/bootstrap.bundle.min.js",
-              "C:/Users/aksha/Desktop/NBIOSAST/nbiosast-spa/js/sb-admin-2.min.js"
+              
+              "src/assets/vendor/jquery/jquery.min.js",
+              "src/assets/vendor/jquery-easing/jquery.easing.min.js",
+              "src/assets/vendor/datatables/jquery.dataTables.min.js",
+              "src/assets/vendor/datatables/dataTables.bootstrap4.min.js",
+              "src/assets/vendor/bootstrap/js/bootstrap.bundle.min.js",
+              
+              "src/assets/js/demo/datatables-demo.js",
+              "src/assets/js/sb-admin-2.min.js",
+              "src/assets/js/demo/chart-area-demo.js",
+              "src/assets/js/demo/chart-bar-demo.js",
+              "src/assets/js/demo/chart-pie-demo.js"
             ]
           },
           "configurations": {

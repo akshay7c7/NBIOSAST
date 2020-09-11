@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { AuthService } from '../_services/auth.service';
-import { AlertifyService } from '../_services/alertify.service';
 import { LoginComponent } from '../login/login.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +10,9 @@ import { LoginComponent } from '../login/login.component';
 
 export class AuthGuard implements CanActivate {
 constructor(
-  private authService: AuthService,
-  private alertify : AlertifyService, 
-  private router: Router
+  private authService: AuthService, 
+  private router: Router,
+  private snackbar : MatSnackBar
   )
   {
    
@@ -30,7 +30,7 @@ constructor(
           return true;
         } else {
           this.router.navigate(['/dashboard']);
-          this.alertify.error('You are not authorized to access this area');
+          this.snackbar.open('You are not authorized to access this area','',{duration: 1000});
         }
       }
 
@@ -38,7 +38,7 @@ constructor(
       {
         return true;
       }
-      this.alertify.error("Not Authenticated");
+      this.snackbar.open('Not Authenticated','',{duration: 1000});
       this.router.navigate(['/login']);
       return false;
   }

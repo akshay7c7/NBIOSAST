@@ -23,9 +23,10 @@ import { HasRoleDirective } from './_directives/hasRole.directive';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { ConfirmDialogueComponent } from './ConfirmDialogue/ConfirmDialogue.component';
+import { EditPasswordComponent } from './EditPassword/EditPassword.component';
 
 @NgModule({
-  declarations: [													
+  declarations: [														
     AppComponent,
       DashboardComponent,
       SidebarComponent,
@@ -40,7 +41,8 @@ import { ConfirmDialogueComponent } from './ConfirmDialogue/ConfirmDialogue.comp
       LoginComponent,
       ForgotPasswordComponent,
       HasRoleDirective,
-      ConfirmDialogueComponent
+      ConfirmDialogueComponent,
+      EditPasswordComponent
    ],
   imports: [
     BrowserModule,

@@ -15,9 +15,8 @@ using NBI.API.Repository;
 
 namespace NBI.API.Controllers
 {
-    [Route("api/[controller]")]   //api/users
+    [Route("api/[controller]")]   
     [ApiController]
-    [AllowAnonymous]
     public class UsersController : ControllerBase
     {
         private readonly IAdminMaintainRepository _repo;
@@ -31,6 +30,8 @@ namespace NBI.API.Controllers
             _repo = repo;
 
         }
+
+        [Authorize(Roles="DriverCreater,BranchAdminCreater,AccountAdminCreater")]
         [HttpGet("{id}", Name = "GetUser")]    
         public async Task<IActionResult> GetUser(int id)
         {
@@ -43,6 +44,8 @@ namespace NBI.API.Controllers
             return Ok(userDetailsToShow);
 
         }
+
+        [Authorize(Roles="BranchAdminCreater,AccountAdminCreater")]
         [HttpGet(Name = "GetUsers")]    
         public async Task<IActionResult> GetUsers()
         {
@@ -56,19 +59,14 @@ namespace NBI.API.Controllers
 
         }
 
-        [HttpPut("{id}")]     // put http://localhost:5000/api/2
+        [Authorize(Roles="DriverCreater,BranchAdminCreater,AccountAdminCreater")]
+        [HttpPut("{id}")]    
         public async Task<IActionResult> UpdateUser(int id, UserForUpdateAdminDto userForUpdateAdminDto)
         {
-
-            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-            {
-                return Unauthorized();
-            }
             var userFromRepo = await _repo.GetUser(id);
 
             _mapper.Map(userForUpdateAdminDto, userFromRepo);
             
-
             if (await _repo.SaveAll()){
 
                 var userToReturn = _mapper.Map<UserForDisplayDetailDto>(userFromRepo);
@@ -80,6 +78,7 @@ namespace NBI.API.Controllers
 
         }
 
+        [Authorize(Roles="DriverCreater,BranchAdminCreater,AccountAdminCreater")]
         [HttpGet("usersWithRoles", Name = "GetUsersWithRoles")]
         public async Task<IActionResult> GetUsersWithRolesHttp()
         {
@@ -88,16 +87,13 @@ namespace NBI.API.Controllers
             
         }
 
+
+        [Authorize(Roles="DriverCreater,BranchAdminCreater,AccountAdminCreater")]
         [HttpGet("userWithRole/{id}", Name = "GetUserWithRole")]
         public async Task<IActionResult> GetUserWithRoleHttp(int id)
         {
             var users = await _repo.GetUserWithRole(id);
             return Ok(users);
-            
         }
-
-        
-
-
     }
 }

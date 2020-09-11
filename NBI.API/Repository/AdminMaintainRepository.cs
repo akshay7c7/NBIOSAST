@@ -33,7 +33,7 @@ namespace NBI.API.Repository
             _context.Remove(entity);
         }
 
-        public async Task<User> GetUser(int id)
+        public async Task<User> GetUser(int id )
         {
            
            var user = await _context.Users.FirstOrDefaultAsync(x=>x.Id==id);

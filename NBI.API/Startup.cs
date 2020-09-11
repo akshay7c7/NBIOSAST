@@ -19,7 +19,7 @@ using NBI.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
-
+using NBI.API.Helper;
 
 namespace NBI.API
 {
@@ -89,6 +89,7 @@ namespace NBI.API
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IAdminMaintainRepository, AdminMaintainRepository>();
+            services.AddScoped<LogUserActivity>();
             
         }
 

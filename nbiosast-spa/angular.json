@@ -37,10 +37,8 @@
               "src/assets/vendor/bootstrap/js/bootstrap.bundle.min.js",
               
               "src/assets/js/demo/datatables-demo.js",
-              "src/assets/js/sb-admin-2.min.js",
-              "src/assets/js/demo/chart-area-demo.js",
-              "src/assets/js/demo/chart-bar-demo.js",
-              "src/assets/js/demo/chart-pie-demo.js"
+              "src/assets/js/sb-admin-2.min.js"
+              
             ]
           },
           "configurations": {

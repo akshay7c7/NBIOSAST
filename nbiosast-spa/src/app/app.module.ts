@@ -24,6 +24,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { ConfirmDialogueComponent } from './ConfirmDialogue/ConfirmDialogue.component';
 import { EditPasswordComponent } from './EditPassword/EditPassword.component';
+import { JwtModule } from '@auth0/angular-jwt';
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [														
@@ -52,7 +57,14 @@ import { EditPasswordComponent } from './EditPassword/EditPassword.component';
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    JwtModule.forRoot({
+      config: {
+          tokenGetter: tokenGetter,
+          allowedDomains : ['localhost:5000'],
+          disallowedRoutes: ['localhost:5000/api/auth']
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent],

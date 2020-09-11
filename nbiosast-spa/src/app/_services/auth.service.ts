@@ -30,8 +30,6 @@ export class AuthService {
             localStorage.setItem('user',JSON.stringify(user.user));
             this.decodedToken= this.jwtHelper.decodeToken(user.token);
             this.currentUser= user.user;
-            console.log(this.decodedToken);
-            this.decodedToken.nam
           }
         }
       )
@@ -54,6 +52,11 @@ export class AuthService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
+  EditPassword(id:number, password: User)
+  {
+    return this.http.put(this.baseUrl+"editPassword/"+id,password);
+  }
+
   private _loggingInSource = new Subject<boolean>();
   loggingIn$ = this._loggingInSource.asObservable(); 
   HideSidebarTopBar(data : boolean)
@@ -64,7 +67,7 @@ export class AuthService {
   logout()
   {
     this.http.post(this.baseUrl+'logout/'+ this.decodedToken.nameid,{}).subscribe(
-      error=>{console.log(error)});
+      );
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     const token =  localStorage.getItem('token');

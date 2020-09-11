@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Linq;
 using System.Data;
 using System;
@@ -19,9 +20,10 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.API.Controllers
-{   [AllowAnonymous]
+{   
     [Route("api/[Controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class AuthController : ControllerBase
     {
         private readonly IAdminMaintainRepository _repo;
@@ -48,7 +50,31 @@ namespace DatingApp.API.Controllers
             _signInManager = signInManager;
         }
 
-        [Authorize(Roles = "AccountAdminCreater")]
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
+        {
+            var user = await _userManager.FindByNameAsync(userForLoginDto.UserName);
+            if (user==null)
+            {
+                return Unauthorized("Username not found !");
+            }
+            var result = await _signInManager.CheckPasswordSignInAsync(user,userForLoginDto.Password , false);
+            if(result.Succeeded)
+            {
+                var appUser = _userManager.Users.Where(u=>u.NormalizedUserName==userForLoginDto.UserName.ToUpper()).FirstOrDefault();
+                var userToReturn = _mapper.Map<UserForDisplayDetailDto>(appUser);
+                return Ok(new
+                {
+                    token = GenerateJwtToken(appUser).Result,
+                    user = userToReturn
+                    
+                });
+            }
+
+            return Unauthorized("Incorrect Password !");
+        }
+
         [HttpPost("CreateAccountAdmin")]
         public async Task<IActionResult> CreateAccountAdmin(UserForCreateAdminDto userForCreateAdminDto)
         {
@@ -114,29 +140,6 @@ namespace DatingApp.API.Controllers
             
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
-        {
-            var user = await _userManager.FindByNameAsync(userForLoginDto.UserName);
-            if (user==null)
-            {
-                return Unauthorized("Username not found !");
-            }
-            var result = await _signInManager.CheckPasswordSignInAsync(user,userForLoginDto.Password , false);
-            if(result.Succeeded)
-            {
-                var appUser = _userManager.Users.Where(u=>u.NormalizedUserName==userForLoginDto.UserName.ToUpper()).FirstOrDefault();
-                var userToReturn = _mapper.Map<UserForDisplayDetailDto>(appUser);
-                return Ok(new
-                {
-                    token = GenerateJwtToken(appUser).Result,
-                    user = userToReturn
-                    
-                });
-            }
-
-            return Unauthorized("Incorrect Password !");
-        }
 
         private async Task<string> GenerateJwtToken(User user)
         {
@@ -167,36 +170,39 @@ namespace DatingApp.API.Controllers
             _repo.SendWhatsappMessage(user.Name ,"has logged in at");
             return tokenHandler.WriteToken(token);
 
-
         }
         
-        [HttpPut("editPassword/{id}")]  // api/users/6/editpassword
+       
+        [HttpPut("editPassword/{id}")]  
         public async Task<IActionResult> PasswordChange(int id, PasswordChangeDto passwordChangeDto)
         {
             if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
-                return Unauthorized();
+                System.Console.WriteLine("UA");
+                return Unauthorized("Not authorized");
             }
+                
             var userFromRepo = await _repo.GetUser(id);
             userFromRepo.PasswordHash = _userManager.PasswordHasher
                                         .HashPassword(userFromRepo ,passwordChangeDto.Password);
             var result = await _userManager.UpdateAsync(userFromRepo);
             if(!result.Succeeded)
             {
+                System.Console.WriteLine("UR");
                 return BadRequest("Could Not Change Password");
+                
             }
             await _repo.SaveAll();
-            return Ok("Password reset successfully");
-
+            System.Console.WriteLine("Success");
+            return Ok(new{message = "Updated Successfully"}); //imp
         }
 
         [HttpPost("logout/{id}")]
-
         public async Task<IActionResult> Logout(int id)
         {
             var userFromRepo = await _repo.GetUser(id);
             _repo.SendWhatsappMessage(userFromRepo.Name,"has logged out at");
-            return Ok("Logged out successfully");
+            return Ok();
         }
 
         

@@ -25,13 +25,19 @@ import { MaterialModule } from './material/material.module';
 import { ConfirmDialogueComponent } from './ConfirmDialogue/ConfirmDialogue.component';
 import { EditPasswordComponent } from './EditPassword/EditPassword.component';
 import { JwtModule } from '@auth0/angular-jwt';
+import { EditResolver } from './_resolvers/EditResolver';
+import { BranchDetailsResolver } from './_resolvers/BranchDetailsResolver';
+import { AuthGuard } from './_guards/auth.guard';
+import { UserService } from './_services/user.service';
+import { AuthService } from './_services/auth.service';
+import { DriverDetailsShowComponent } from './DriverDetailsShow/DriverDetailsShow.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
 
 @NgModule({
-  declarations: [														
+  declarations: [															
     AppComponent,
       DashboardComponent,
       SidebarComponent,
@@ -47,7 +53,8 @@ export function tokenGetter() {
       ForgotPasswordComponent,
       HasRoleDirective,
       ConfirmDialogueComponent,
-      EditPasswordComponent
+      EditPasswordComponent,
+      DriverDetailsShowComponent
    ],
   imports: [
     BrowserModule,
@@ -66,7 +73,7 @@ export function tokenGetter() {
       }
     })
   ],
-  providers: [],
+  providers: [AuthGuard,EditResolver,UserService,AuthService,BranchDetailsResolver],
   bootstrap: [AppComponent],
   entryComponents : [ConfirmDialogueComponent]
 })

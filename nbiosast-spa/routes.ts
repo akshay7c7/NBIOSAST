@@ -10,6 +10,9 @@ import { LoginComponent } from 'src/app/login/login.component';
 import { AuthGuard } from 'src/app/_guards/auth.guard';
 import { NgIf } from '@angular/common';
 import { EditPasswordComponent } from 'src/app/EditPassword/EditPassword.component';
+import { EditResolver } from 'src/app/_resolvers/EditResolver';
+import { BranchDetailsResolver } from 'src/app/_resolvers/BranchDetailsResolver';
+import { DriverDetailsShowComponent } from 'src/app/DriverDetailsShow/DriverDetailsShow.component';
 
 export const appRoutes : Routes = [
 
@@ -23,12 +26,13 @@ export const appRoutes : Routes = [
         children : [
             {path : 'dashboard' , component : DashboardComponent},
             {path : 'addaccount' , component : AddAccountAdminComponent , data: {roles: ['AccountAdminCreater']}},
-            {path : 'branchdetails' , component : BranchDetailsShowComponent , data: {roles: ['AccountAdminCreater','BranchAdminCreater']}} ,
+            {path : 'branchdetails' , component : BranchDetailsShowComponent , data: {roles: ['AccountAdminCreater','BranchAdminCreater']}, resolve:{branchDetails:BranchDetailsResolver}} ,
             {path : 'addbranchdetails' , component : AddBranchAdminComponent ,data: {roles: ['AccountAdminCreater','BranchAdminCreater']}},
             {path : 'adddriverdetails' , component : AddDriverDetailsComponent ,data: {roles: ['AccountAdminCreater','BranchAdminCreater','DriverCreater']}},
             {path : 'expirecards' , component : ExpireCardDetailsComponent},
-            {path : 'editprofile' , component : EditProfileComponent},
+            {path : 'editprofile' , component : EditProfileComponent, resolve:{editResolve:EditResolver}},
             {path : 'editpassword' , component : EditPasswordComponent},
+            {path : 'driverdetails', component : DriverDetailsShowComponent}
 
         ]
     },

@@ -5,11 +5,11 @@ import { User } from '../_models/user';
 import { UserService } from '../_services/user.service';
 
 @Component({
-  selector: 'app-BranchDetailsShow',
-  templateUrl: './BranchDetailsShow.component.html',
+  selector: 'app-DriverDetailsShow',
+  templateUrl: './DriverDetailsShow.component.html',
   styleUrls: ['../app.component.css']
 })
-export class BranchDetailsShowComponent implements OnInit {
+export class DriverDetailsShowComponent implements OnInit {
 
   constructor(private userService : UserService,
               private snacker : MatSnackBar, private route : ActivatedRoute, private router : Router) { }
@@ -17,24 +17,24 @@ export class BranchDetailsShowComponent implements OnInit {
   ngOnInit() {
     this.route.data
     .subscribe(
-      data=>{this.branchAdmin = data['branchDetails']}
+      data=>{this.Driver = data['DriverDetails']}
     )
   }
 
   
-  addBranchAdminMode = false;
+  addDriverMode = false;
 
-  AddBranchAdmin()
+  AddDriver()
   {
-    this.addBranchAdminMode=true;
+    this.addDriverMode=true;
   }
-  cancelBranchCreation(creation : boolean)
+  cancelDriverCreation(creation : boolean)
   {
-    this.addBranchAdminMode = creation;
+    this.addDriverMode = creation;
   }
 
   headers =["name", "email", "userName","city"];
-  branchAdmin : any=[];
+  Driver: any=[];
   
 
 

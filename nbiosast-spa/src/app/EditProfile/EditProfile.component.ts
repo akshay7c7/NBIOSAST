@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../_models/user';
 import { AuthService } from '../_services/auth.service';
 import { UserService } from '../_services/user.service';
@@ -20,16 +20,17 @@ export class EditProfileComponent implements OnInit {
     private authService : AuthService,
     private userService : UserService,
     private snackbar : MatSnackBar,
-    private router : Router) { }
+    private router : Router,
+    private route : ActivatedRoute) { }
 
     public user ={} as User;
 
     ngOnInit() {
-    this.userService.GetUserDetail(this.authService.decodedToken.nameid)
+    this.route.data
     .subscribe(
       data=>
       {
-        this.user = data;
+        this.user = data['editResolve'];
       }
     )
   }

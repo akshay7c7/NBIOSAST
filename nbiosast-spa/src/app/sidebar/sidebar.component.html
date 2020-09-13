@@ -25,21 +25,21 @@
  <li *appHasRole = "['AccountAdminCreater']" class="nav-item">
     <a class="nav-link" [routerLink] = "['/addaccount']">
       <i class="fas fa-fw fa-chart-area"></i>
-      <span>Add New Admin</span></a>
+      <span>Admin Details</span></a>
   </li>
 
 
   <li *appHasRole = "['AccountAdminCreater','BranchAdminCreater']" class="nav-item">
     <a class="nav-link" [routerLink]="['/branchdetails']" >
       <i class="fas fa-fw fa-chart-area"></i>
-      <span>Add New Branch</span></a>
+      <span>Branch Details</span></a>
   </li>
 
   <!-- Nav Item - Tables -->
   <li class="nav-item">
-    <a class="nav-link" [routerLink]="['/adddriverdetails']" >
+    <a class="nav-link" [routerLink]="['/driverdetails']" >
       <i class="fas fa-fw fa-table"></i>
-      <span>Add Driver Details</span></a>
+      <span>Driver Details</span></a>
   </li>
 
   <li class="nav-item">

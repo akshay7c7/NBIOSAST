@@ -1,0 +1,7 @@
+<div  class="card-body" *ngIf="!addDriverMode">
+  <a class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm" (click)="AddDriver()"><i class="fas fa-download fa-sm text-white-50"></i> Add Driver</a>
+</div>
+
+<div *ngIf="addDriverMode" class="container">
+  <app-AddDriverDetails (cancelDriverCreation)="cancelDriverCreation($event)"></app-AddDriverDetails>
+</div>

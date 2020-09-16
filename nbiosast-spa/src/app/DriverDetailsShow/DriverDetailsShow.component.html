@@ -1,16 +1,59 @@
 <div  class="card-body" *ngIf="!addDriverMode">
-  <a class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm" (click)="AddDriver()"><i class="fas fa-download fa-sm text-white-50"></i> Add Driver</a>
+  <div class="mat-elevation-z8">
+    <div>
+      <a class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm" (click)="AddDriver()"><i class="fas fa-download fa-sm text-white-50"></i> Add Branch</a>
+      <mat-form-field class="d-none d-sm-inline-block search-form-field ml-5" floatLabel="never">
+        <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+        <button mat-button matSuffix mat-icon-button area-label="Clear">
+        <mat-icon *ngIf="searchKey" (click)="ClearIt()">close</mat-icon></button>
+    </mat-form-field>
+    </div>
+    <mat-table [dataSource] = "Driver">
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Full Name</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="drivers">
+        <mat-header-cell *matHeaderCellDef>Total Drivers</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.drivers}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.email}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="userName">
+        <mat-header-cell *matHeaderCellDef>Username</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.userName}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="city">
+        <mat-header-cell *matHeaderCellDef>Branch</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.city}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button mat-icon-button color="warn"><mat-icon>delete_outline</mat-icon></button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="loading">
+        <mat-footer-cell *matFooterCellDef colspan="6" >
+          Loading data...
+        </mat-footer-cell>
+      </ng-container>
+      <ng-container matColumnDef="noData">
+        <mat-footer-cell *matFooterCellDef colspan="6" >
+          No Data to display.
+        </mat-footer-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="DisplayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns:DisplayedColumns;"></mat-row>
+      <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':showLoading==false}"></mat-footer-row>
+      <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':Driver!=null}"></mat-footer-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions] ="[5, 10, 15, 20]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+  </div>
 </div>
-<div class="mat-elevation-z8">
-  <mat-table [dataSource] = "Driver">
-    <ng-container matColumnDef="fullname">
-      <mat-header-cell *matHeaderCellDef>Full Name</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.fullName}}</mat-cell>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="DisplayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns:DisplayedColumns;"></mat-row>
-  </mat-table>
-</div>
+
 <div *ngIf="addDriverMode" class="container">
   <app-AddDriverDetails (cancelDriverCreation)="cancelDriverCreation($event)"></app-AddDriverDetails>
 </div>

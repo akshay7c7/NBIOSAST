@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '../_models/user';
 import { UserService } from '../_services/user.service';
 
 @Component({
@@ -22,7 +21,7 @@ export class DriverDetailsShowComponent implements OnInit {
     )
   }
 
-  
+  showLoading;
   addDriverMode = false;
 
   AddDriver()
@@ -34,9 +33,19 @@ export class DriverDetailsShowComponent implements OnInit {
     this.addDriverMode = creation;
   }
 
-  headers =["name", "email", "userName","city"];
+ 
   Driver: MatTableDataSource<any>;
   DisplayedColumns : string[]= ['fullname']
+  searchKey;
+  ClearIt()
+  {
+    this.searchKey = "";
+  }
+  
+  applyFilter()
+  {
+    this.Driver.filter = this.searchKey.trim().toLowerCase();
+  }
   
 
 

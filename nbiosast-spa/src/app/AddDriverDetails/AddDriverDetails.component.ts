@@ -21,4 +21,10 @@ export class AddDriverDetailsComponent implements OnInit {
     this.cancelDriverCreation.emit(false);
   }
 
+  doc=true;
+  hideDoc(data)
+  {
+    this.doc = data;
+  }
+
 }

@@ -52,4 +52,14 @@ searchKey;
     this.addBranchAdminMode = creation;
   }
 
+  ClearIt()
+  {
+    this.searchKey = "";
+  }
+  
+  applyFilter()
+  {
+    this.branchAdmin.filter = this.searchKey.trim().toLowerCase();
+  }
+
 }

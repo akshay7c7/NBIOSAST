@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../_models/user';
 import { UserService } from '../_services/user.service';
@@ -17,7 +18,7 @@ export class DriverDetailsShowComponent implements OnInit {
   ngOnInit() {
     this.route.data
     .subscribe(
-      data=>{this.Driver = data['DriverDetails']}
+      data=>{this.Driver = data['DriverDetails'];}
     )
   }
 
@@ -34,7 +35,8 @@ export class DriverDetailsShowComponent implements OnInit {
   }
 
   headers =["name", "email", "userName","city"];
-  Driver: any=[];
+  Driver: MatTableDataSource<any>;
+  DisplayedColumns : string[]= ['fullname']
   
 
 

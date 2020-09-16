@@ -1,37 +1,63 @@
 <div class="container-fluid" *ngIf="!addBranchAdminMode">
-
-  <!-- Page Heading -->
-  
-  <!-- DataTales Example -->
-  <div class="card shadow mb-4">
-    <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">Branch Details</h6>
-    </div>
-
-    <div  class="card-body">
-      <a class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm" (click)="AddBranchAdmin()"><i class="fas fa-download fa-sm text-white-50"></i> Add Branch</a>
-      <br><br>
-      <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-          <thead>
-            <tr>
-              <th *ngFor="let column of headers">{{column | uppercase }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row of branchAdmin">
-              <td *ngFor="let column of headers">
-                {{row[column]}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="mat-elevation-z8">
+        <div class="search-div">
+          <mat-form-field class="search-form-field float-right">
+              <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off">
+              <button mat-button matSuffix mat-icon-button area-label="Clear">
+              <mat-icon>close</mat-icon></button>
+            </mat-form-field>
+        </div>
+        <div>
+          <h6 class="m-0 font-weight-bold text-primary">Branch Details</h6>  
+        </div>
+        <div>
+          <a class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm" (click)="AddBranchAdmin()"><i class="fas fa-download fa-sm text-white-50"></i> Add Branch</a>
+        </div>
+        <mat-table [dataSource] = "branchAdmin">
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Full Name</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="drivers">
+            <mat-header-cell *matHeaderCellDef>Total Drivers</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.drivers}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.email}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="userName">
+            <mat-header-cell *matHeaderCellDef>Username</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.userName}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="city">
+            <mat-header-cell *matHeaderCellDef>Branch</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.city}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <button mat-icon-button color="warn"><mat-icon>delete_outline</mat-icon></button>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="loading">
+            <mat-footer-cell *matFooterCellDef colspan="6" >
+              Loading data...
+            </mat-footer-cell>
+          </ng-container>
+          <ng-container matColumnDef="noData">
+            <mat-footer-cell *matFooterCellDef colspan="6" >
+              No Data to display.
+            </mat-footer-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="DisplayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns:DisplayedColumns;"></mat-row>
+          <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':showLoading==false}"></mat-footer-row>
+          <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':branchAdmin!=null}"></mat-footer-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions] ="[5, 10, 15, 20]" [pageSize]="5" showFirstLastButtons></mat-paginator>
       </div>
-    </div>
   </div>
-
-</div>
-
 <div *ngIf="addBranchAdminMode" class="container">
   <app-AddBranchAdmin  (cancelBranchCreation)="cancelBranchCreation($event)"></app-AddBranchAdmin>
 </div>

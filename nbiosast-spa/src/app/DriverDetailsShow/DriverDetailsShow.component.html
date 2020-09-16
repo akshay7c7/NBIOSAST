@@ -1,7 +1,16 @@
 <div  class="card-body" *ngIf="!addDriverMode">
   <a class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm" (click)="AddDriver()"><i class="fas fa-download fa-sm text-white-50"></i> Add Driver</a>
 </div>
-
+<div class="mat-elevation-z8">
+  <mat-table [dataSource] = "Driver">
+    <ng-container matColumnDef="fullname">
+      <mat-header-cell *matHeaderCellDef>Full Name</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.fullName}}</mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="DisplayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns:DisplayedColumns;"></mat-row>
+  </mat-table>
+</div>
 <div *ngIf="addDriverMode" class="container">
   <app-AddDriverDetails (cancelDriverCreation)="cancelDriverCreation($event)"></app-AddDriverDetails>
 </div>

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '../_models/user';
 import { UserService } from '../_services/user.service';
 
 @Component({
@@ -9,18 +10,36 @@ import { UserService } from '../_services/user.service';
   templateUrl: './BranchDetailsShow.component.html',
   styleUrls: ['../app.component.css']
 })
-export class BranchDetailsShowComponent implements OnInit {
+export class BranchDetailsShowComponent implements OnInit, AfterViewInit {
 
+@ViewChild(MatPaginator) paginator : MatPaginator;
+
+DisplayedColumns =["city","drivers", "name", "userName", "email", "actions"];
+showLoading = true;
+branchAdmin : MatTableDataSource<any>
+searchKey;
   constructor(private userService : UserService,
-              private snacker : MatSnackBar, private route : ActivatedRoute, private router : Router) { }
+              private snacker : MatSnackBar, 
+              private route : ActivatedRoute, 
+              private router : Router,
+              private ngZone : NgZone,
+              ) { }
 
   ngOnInit() {
     this.route.data
     .subscribe(
-      data=>{this.branchAdmin = data['branchDetails']}
+      data=>{
+        let array = data['branchDetails'];
+        this.branchAdmin = new MatTableDataSource(array);
+        this.showLoading = false;
+      }
     )
+    
   }
 
+  ngAfterViewInit(): void {
+    this.branchAdmin.paginator = this.paginator;
+  }
   
   addBranchAdminMode = false;
 
@@ -32,10 +51,5 @@ export class BranchDetailsShowComponent implements OnInit {
   {
     this.addBranchAdminMode = creation;
   }
-
-  headers =["name", "email", "userName","city"];
-  branchAdmin : any=[];
-  
-
 
 }

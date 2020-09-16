@@ -4,6 +4,7 @@
         "Dtos",
         "Forupdatedto",
         "Fromrepo",
+        "Sidenav",
         "Twilio",
         "addaccount",
         "addbranchdetails",
@@ -17,6 +18,8 @@
         "editprofile",
         "expirecards",
         "fontawesome",
+        "paginator",
+        "snacker",
         "topbar"
     ]
 }

@@ -13,6 +13,7 @@ import { EditPasswordComponent } from 'src/app/EditPassword/EditPassword.compone
 import { EditResolver } from 'src/app/_resolvers/EditResolver';
 import { BranchDetailsResolver } from 'src/app/_resolvers/BranchDetailsResolver';
 import { DriverDetailsShowComponent } from 'src/app/DriverDetailsShow/DriverDetailsShow.component';
+import { DriverDetailsResolver } from 'src/app/_resolvers/DriverDetailsResolver';
 
 export const appRoutes : Routes = [
 
@@ -28,6 +29,7 @@ export const appRoutes : Routes = [
             {path : 'addaccount' , component : AddAccountAdminComponent , data: {roles: ['AccountAdminCreater']}},
             {path : 'branchdetails' , component : BranchDetailsShowComponent , data: {roles: ['AccountAdminCreater','BranchAdminCreater']}, resolve:{branchDetails:BranchDetailsResolver}} ,
             {path : 'addbranchdetails' , component : AddBranchAdminComponent ,data: {roles: ['AccountAdminCreater','BranchAdminCreater']}},
+            {path : 'driverdetails' , component : DriverDetailsShowComponent , data: {roles: ['AccountAdminCreater','BranchAdminCreater']}, resolve:{driverDetails:DriverDetailsResolver}} ,
             {path : 'adddriverdetails' , component : AddDriverDetailsComponent ,data: {roles: ['AccountAdminCreater','BranchAdminCreater','DriverCreater']}},
             {path : 'expirecards' , component : ExpireCardDetailsComponent},
             {path : 'editprofile' , component : EditProfileComponent, resolve:{editResolve:EditResolver}},

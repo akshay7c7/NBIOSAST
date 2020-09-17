@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../_services/user.service';
+import { Driver } from '../_models/Driver';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-DriverDetailsShow',
@@ -11,17 +14,35 @@ import { UserService } from '../_services/user.service';
 })
 export class DriverDetailsShowComponent implements OnInit {
 
-  constructor(private userService : UserService,
-              private snacker : MatSnackBar, private route : ActivatedRoute, private router : Router) { }
+  @ViewChild(MatPaginator) paginator : MatPaginator;
 
+  DisplayedColumns : string[]= ['id','name','address','photo','status','actions'];
+  showLoading = true;
+  Driver: MatTableDataSource<any>
+  imageSrc;
+  searchKey;
+  
+  constructor(private userService : UserService,
+              private snacker : MatSnackBar, 
+              private route : ActivatedRoute, 
+              private router : Router,
+              private http: HttpClient) { }
+  
   ngOnInit() {
     this.route.data
     .subscribe(
-      data=>{this.Driver = data['DriverDetails'];}
+      data=>{
+        let array = data['driverDetails'];
+        this.Driver = new MatTableDataSource(array);
+        this.showLoading = false;
+      }
     )
   }
 
-  showLoading;
+  ngAfterViewInit(): void {
+    this.Driver.paginator = this.paginator;
+  }
+
   addDriverMode = false;
 
   AddDriver()
@@ -34,9 +55,8 @@ export class DriverDetailsShowComponent implements OnInit {
   }
 
  
-  Driver: MatTableDataSource<any>;
-  DisplayedColumns : string[]= ['fullname']
-  searchKey;
+  
+  
   ClearIt()
   {
     this.searchKey = "";

@@ -9,7 +9,7 @@
     </mat-form-field>
     </div>
     <mat-table [dataSource] = "branchAdmin">
-      <ng-container matColumnDef="name">
+      <ng-container matColumnDef="nameAdmin">
         <mat-header-cell *matHeaderCellDef>Full Name</mat-header-cell>
         <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
       </ng-container>
@@ -29,7 +29,7 @@
         <mat-header-cell *matHeaderCellDef>Branch</mat-header-cell>
         <mat-cell *matCellDef="let element">{{element.city}}</mat-cell>
       </ng-container>
-      <ng-container matColumnDef="actions">
+      <ng-container matColumnDef="action">
         <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>
         <mat-cell *matCellDef="let row">
           <button mat-icon-button color="warn"><mat-icon>delete_outline</mat-icon></button>

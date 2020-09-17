@@ -1,14 +1,10 @@
 using System;
-using System.IO;
-using Microsoft.AspNetCore.Http;
 
-namespace NBI.API.Models
+namespace NBI.API.Dtos
 {
-    public class Driver
+    public class DriverReturnData
     {
-        public int Id { get; set; }
         public string Name { get; set; }
-        public string Document { get; set; }
         public string CertificateNo { get; set; }
         public string LicenseNo { get; set; }
         public string TransPortName { get; set; }
@@ -21,8 +17,5 @@ namespace NBI.API.Models
         public DateTime TrainingStartDate { get; set; }
         public DateTime TrainingEndDate { get; set; }
         public int TrainingPeriod { get; set; }
-        public string Photo { get; set; }
-        public string OneDayDoc {get;set;}
-        
     }
 }

@@ -31,6 +31,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { UserService } from './_services/user.service';
 import { AuthService } from './_services/auth.service';
 import { DriverDetailsShowComponent } from './DriverDetailsShow/DriverDetailsShow.component';
+import { DriverDetailsResolver } from './_resolvers/DriverDetailsResolver';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -73,7 +74,7 @@ export function tokenGetter() {
       }
     })
   ],
-  providers: [AuthGuard,EditResolver,UserService,AuthService,BranchDetailsResolver],
+  providers: [AuthGuard,EditResolver,UserService,AuthService,BranchDetailsResolver,DriverDetailsResolver],
   bootstrap: [AppComponent],
   entryComponents : [ConfirmDialogueComponent]
 })

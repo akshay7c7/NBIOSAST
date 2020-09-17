@@ -14,12 +14,15 @@
         "datatables",
         "devkit",
         "driverdetails",
+        "driverto",
         "editpassword",
         "editprofile",
         "expirecards",
         "fontawesome",
+        "getalldrivers",
         "paginator",
         "snacker",
+        "tabindex",
         "topbar"
     ]
 }

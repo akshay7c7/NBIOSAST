@@ -67,7 +67,7 @@ namespace NBI.API.Controllers
 
             _mapper.Map(userForUpdateAdminDto, userFromRepo);
             
-            if (await _repo.SaveAll()){
+            if (await  _repo.SaveAll()){
 
                 var userToReturn = _mapper.Map<UserForDisplayDetailDto>(userFromRepo);
                 return CreatedAtRoute("GetUser", new { Controller = "Users", id = userFromRepo.Id }, userToReturn);

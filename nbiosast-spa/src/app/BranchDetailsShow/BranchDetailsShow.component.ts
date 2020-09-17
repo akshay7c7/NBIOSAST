@@ -14,10 +14,11 @@ export class BranchDetailsShowComponent implements OnInit, AfterViewInit {
 
 @ViewChild(MatPaginator) paginator : MatPaginator;
 
-DisplayedColumns =["city","drivers", "name", "userName", "email", "actions"];
+DisplayedColumns =["city","drivers", "nameAdmin", "userName", "email", "action"];
 showLoading = true;
 branchAdmin : MatTableDataSource<any>
 searchKey;
+
   constructor(private userService : UserService,
               private snacker : MatSnackBar, 
               private route : ActivatedRoute, 

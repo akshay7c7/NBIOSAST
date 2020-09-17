@@ -11,6 +11,17 @@ namespace NBI.API.Helper
             CreateMap<UserForCreateAdminDto, User>();
             CreateMap<UserForUpdateAdminDto, User>();
             CreateMap<User, UserForDisplayDetailDto>();
+            CreateMap<DriverCreationDto, Driver>();
+            CreateMap<Driver, DriverReturnData>();
+            CreateMap<DriverCreationDto, DriverReturnData>();
+            CreateMap<DriverReturnData, Driver>();
+            CreateMap<DriverReturnData, DriverCreationDto>();
+            CreateMap<DriverReturnData, DriverReturnDto>();
+            CreateMap<DriverCreationDto, DriverReturnData>();
+            CreateMap<DriverReturnFiles, DriverReturnDto>();
+            CreateMap<DriverReturnFiles, Driver>();
+
+
         }
     }
 }

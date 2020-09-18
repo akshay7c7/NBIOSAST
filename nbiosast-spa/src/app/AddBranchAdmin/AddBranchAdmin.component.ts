@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './AddBranchAdmin.component.html',
   styleUrls: ['../app.component.css']
 })
+
 export class AddBranchAdminComponent implements OnInit {
 
   @Output() cancelBranchCreation = new EventEmitter();
@@ -23,41 +24,47 @@ ngOnInit() {
   this.CreateAddBranchAdmin();
 }
 
-createBranchAdminForm : FormGroup; //defining the form
-user : User;
+  createBranchAdminForm : FormGroup; 
+  user : User;
 
-CreateAddBranchAdmin()
-{
-  this.createBranchAdminForm = this.fb.group(
+  CreateAddBranchAdmin()
   {
-    name : ['',Validators.required],
-    username : ['',Validators.required],
-    email : ['',Validators.required],
-    phoneNumber :['',Validators.required],
-    city : ['',Validators.required],
-    password : ['', [Validators.required, Validators.minLength(4),Validators.maxLength(10)]],
-    cpassword : ['',Validators.required]
-  },
-{
-  validator : this.passwordMatchValidator
-}
+        this.createBranchAdminForm = this.fb.group
+        (
+            {
+              name : ['',Validators.required],
+              username : ['',Validators.required],
+              email : ['',Validators.required],
+              phoneNumber :['',Validators.required],
+              city : ['',Validators.required],
+              password : ['', [Validators.required, Validators.minLength(4),Validators.maxLength(10)]],
+              cpassword : ['',Validators.required]
+            },
+            {
+              validator : this.passwordMatchValidator
+            }
+        )
+  }
 
-)
-}
-passwordMatchValidator(g : FormGroup)
-{
-  return g.get('password').value === g.get('cpassword').value ? null : {'mismatch':true};
-}
+
+  passwordMatchValidator(g : FormGroup)
+  {
+    return g.get('password').value === g.get('cpassword').value ? null : {'mismatch':true};
+  }
 
   RegisterBranchAdmin()
   {
     if(this.createBranchAdminForm.valid)
       {
-        this.user = Object.assign({},this.createBranchAdminForm.value)
+        this.user = Object.assign({},this.createBranchAdminForm.value);
+
         this.authService.registerBranchAdmin(this.user)
         .subscribe(
-          ()=>{this.snackbar.open('Branch Admin Created Successfully','',{duration : 1000});
-                this.createBranchAdminForm.reset();},
+          ()=>{
+            this.snackbar.open('Branch Admin Created Successfully','',{duration : 1000});
+            this.createBranchAdminForm.reset();
+              },
+              
           error =>{this.snackbar.open(error.error,'',{duration : 1000});}
                   )
       } 

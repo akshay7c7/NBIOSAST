@@ -1,97 +1,104 @@
 <div class="container-fluid">
-<div class="card shadow mb-4">
-<div class="card-header py-3">
-  <h6 class="m-0 font-weight-bold text-primary">Add Driver Details</h6>
-</div>
-<div class="card-body">
-  <form>
-<div class="form-row">
-<div class="form-group col-md-4">
-<label for="inputEmail4"> Name </label>
-<input type="email" class="form-control" placeholder="Enter Name here">
-</div>
-<div class="form-group col-md-4">
-<label for="inputPassword4">Certificate No.</label>
-<input type="password" class="form-control" placeholder="Enter Certificate No. here">
-</div>
-  <div class="form-group col-md-4">
-    <label for="inputPassword4">License No.</label>
-    <input type="password" class="form-control" placeholder="Enter License No. here">
-  </div>
-</div>
-<div class="form-row">
-  <div class="form-group col-md-4">
-    <label for="inputEmail4"> Transport Name </label>
-    <input type="email" class="form-control" placeholder="Enter Transport Name here">
-  </div>
-  <div class="form-group col-md-4">
-    <label for="inputPassword4">Transport Address</label>
-    <input type="password" class="form-control"  placeholder="Enter Transport Address here">
-  </div>
-  <div class="form-group col-md-4">
-    <label for="inputPassword4">Transport phoneNo.</label>
-    <input type="password" class="form-control"  placeholder="Enter Transport phoneNo. here">
-  </div>
-</div>
-<div class="form-row">
-  <div class="form-group col-md-4">
-    <label for="inputEmail4"> Date of Birth </label>
-    <input type="date" class="form-control"  placeholder="Enter Transport Name here">
-  </div>
-  <div class="form-group col-md-4">
-  <label for="inputPassword4">Training Period</label> <br>
-  <div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="inlineRadioOptions" (click) ="hideDoc(true)"  value="option1">
-  <label class="form-check-label" for="inlineRadio1">1 days</label> 
-  &nbsp; &nbsp; &nbsp;
-  <input class="form-check-input" type="radio" name="inlineRadioOptions" (click) ="hideDoc(false)"  value="option1">
-  <label class="form-check-label" for="inlineRadio1">3 days</label>
-  </div>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Add Driver Details</h6>
     </div>
-    <div *ngIf="doc"class="form-group col-md-4">
-      <label for="inputPassword4">One Day Certificate</label>
-      <input type="file" class="form-control"  >
-    </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="inputEmail4"> Training start date </label>
-        <input type="date" class="form-control" id="inputEmail4" placeholder="Enter start date here">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="inputPassword4">Training Expiry date</label>
-        <input type="date" class="form-control"  placeholder="Enter expiry date here">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="inputPassword4">Address (license)</label>
-        <input type="text" class="form-control"  placeholder="Enter address here">
+
+    <div class="card-body">
+      <form [formGroup] = "createDriverForm" (ngSubmit)="SaveDriver()">
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="inputEmail4"> Name </label>
+            <input type="text" formControlName="Name" class="form-control" placeholder="Enter Name here">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputPassword4">Certificate No.</label>
+            <input type="text" formControlName="CertificateNo" class="form-control" placeholder="Enter Certificate No. here">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputPassword4">License No.</label>
+            <input type="text" formControlName="LicenseNo" class="form-control" placeholder="Enter License No. here">
+          </div>
         </div>
-      </div>
-      <div class="form-row">
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="inputEmail4"> Transport Name </label>
+            <input type="text" formControlName="TransPortName" class="form-control" placeholder="Enter Transport Name here">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputPassword4">Transport Address</label>
+            <input type="text" formControlName="TransPortAddress" class="form-control"  placeholder="Enter Transport Address here">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputPassword4">Transport phoneNo.</label>
+            <input type="text" formControlName="TransPortPhoneNo" class="form-control"  placeholder="Enter Transport phoneNo. here">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="inputEmail4"> Date of Birth </label>
+            <input type="date" formControlName="DOB" class="form-control"  placeholder="Enter Transport Name here">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputPassword4">Training Period</label> <br>
+            <div class="form-check form-check-inline">
+              <input formControlName="TrainingPeriod" class="form-check-input" type="radio" name="TrainingPeriod" (click) ="hideDoc(true)"  value="1">
+              <label class="form-check-label" for="inlineRadio1">1 days</label> 
+              &nbsp; &nbsp; &nbsp;
+              <input formControlName="TrainingPeriod" class="form-check-input" type="radio" name="TrainingPeriod" (click) ="hideDoc(false)"  value="3">
+              <label class="form-check-label" for="inlineRadio1">3 days</label>
+            </div>
+          </div>
+          <div *ngIf="doc"class="form-group col-md-4">
+            <label for="inputPassword4">One Day Certificate</label>
+            <input formControlName="OneDayDoc" (change)="onFileChangeOneDayDoc($event)" type="file" class="form-control"  >
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="inputEmail4"> Training start date </label>
+            <input type="date" formControlName="TrainingStartDate" class="form-control" id="inputEmail4" placeholder="Enter start date here">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputPassword4">Training Expiry date</label>
+            <input type="date" formControlName="TrainingEndDate" class="form-control"  placeholder="Enter expiry date here">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputPassword4">Address (license)</label>
+            <input type="text" formControlName="Address" class="form-control"  placeholder="Enter address here">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+            <label for="inputEmail4"> Payment amount </label>
+            <input type="text" formControlName="Amount" class="form-control" id="inputEmail4" placeholder="Enter amount here">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputState">Select payment option</label>
+            <select id="inputState" class="form-control" formControlName="PaymentType">
+            <option selected value="">Choose...</option>
+            <option value="Cash">Cash</option>
+            <option value="Check">Check</option>
+            <option value="Online">Online</option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputPassword4">Documents</label>
+            <input formControlName="Document" type="file" (change)="onFileChangeDocument($event)"  class="form-control" >
+          </div>
+        </div>
+
         <div class="form-group col-md-4">
-        <label for="inputEmail4"> Payment amount </label>
-        <input type="text" class="form-control" id="inputEmail4" placeholder="Enter amount here">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="inputState">Select payment option</label>
-        <select id="inputState" class="form-control">
-        <option selected>Choose...</option>
-        <option>Cash</option>
-        <option>Check</option>
-        <option>Online</option>
-        </select>
-      </div>
-      <div class="form-group col-md-4">
-        <label for="inputPassword4">Documents</label>
-        <input type="file" class="form-control"  >
-      </div>
-      </div>
-      <div class="form-group col-md-4">
-        <label for="inputPassword4">Photo</label>
-        <input type="file" class="form-control"  >
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-      <button  class="btn btn-primary ml-2" (click)="Cancel()">Cancel</button>
+          <label  for="inputPassword4">Photo</label>
+          <input type="file" formControlName="Photo" (change)="onFileChangePhoto($event)"  class="form-control"  >
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button  class="btn btn-primary ml-2" (click)="Cancel()">Cancel</button>
+
       </form>
     </div>
   </div>

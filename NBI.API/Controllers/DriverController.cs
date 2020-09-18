@@ -30,7 +30,10 @@ namespace NBI.API.Controllers
         [HttpPost("AddDriver")]
         public async Task<IActionResult> AddDriver([FromForm]DriverCreationDto driverDto)
         {
-            
+                System.Console.WriteLine(driverDto.Photo.Length);
+                System.Console.WriteLine(driverDto.Document.Length);
+                System.Console.WriteLine(Request.Form.Files.Count);
+                var reqFile1 = Request.Form.Files;
                 DriverReturnFiles driverFilesDto = new DriverReturnFiles();
                 
                 using(var ms = new MemoryStream())

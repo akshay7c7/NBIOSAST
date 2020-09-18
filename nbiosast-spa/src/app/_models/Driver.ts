@@ -1,7 +1,7 @@
 export interface Driver{
     Id :number,
     Name :string,
-    Document : string,      
+    Document : File,      
     CertificateNo : string,
     LicenseNo :string,
     TransPortName :string,
@@ -14,6 +14,6 @@ export interface Driver{
     TrainingStartDate :Date,
     TrainingEndDate :Date,
     TrainingPeriod :number,
-    Photo :string,             
-    OneDayDoc: string    
+    Photo :File,             
+    OneDayDoc: File    
 }

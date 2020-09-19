@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { Driver } from '../_models/Driver';
 
@@ -10,16 +11,22 @@ import { Driver } from '../_models/Driver';
 })
 export class LicenseComponentComponent implements OnInit {
 
-  constructor(private http : HttpClient, private activatedRoute : ActivatedRoute) { }
+  
+  constructor(private http : HttpClient, 
+    private activatedRoute : ActivatedRoute,
+    @Inject(MAT_DIALOG_DATA) public data)
+     { }
+
   isloading=false
   public driver ={};
+  public driverClass : Driver = {} as Driver;
   ngOnInit() {
-    var snapshot = this.activatedRoute.snapshot;
-    console.log(snapshot.params['id']);
-    this.http.get("http://localhost:5000/api/driver/getdriver/"+snapshot.params['id'])
+
+    this.http.get("http://localhost:5000/api/driver/getdriver/"+this.data)
     .subscribe(
       data=>{
         this.driver = data;
+        this.driverClass =Object.assign({},this.data)
         this.isloading = true;
       console.log(data)},
       error=>console.log(error.error)

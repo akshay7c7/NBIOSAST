@@ -7,6 +7,8 @@ import { UserService } from '../_services/user.service';
 import { Driver } from '../_models/Driver';
 import { MatPaginator } from '@angular/material/paginator';
 import { DialogService } from '../_services/dialog.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { LicenseComponentComponent } from '../LicenseComponent/LicenseComponent.component';
 
 @Component({
   selector: 'app-DriverDetailsShow',
@@ -29,7 +31,9 @@ export class DriverDetailsShowComponent implements OnInit {
               private route : ActivatedRoute, 
               private router : Router,
               private http: HttpClient,
-              private dialogService : DialogService) { }
+              private dialogService : DialogService,
+              private dialog : MatDialog,
+              ) { }
   
   ngOnInit() {
     this.route.data
@@ -105,8 +109,12 @@ export class DriverDetailsShowComponent implements OnInit {
 
   PrintDriver(element)
   {
-      
-      this.router.navigate(['/license']);
+    const dialogCongif = new MatDialogConfig();
+    dialogCongif.autoFocus = true;
+    dialogCongif.width = "1200px";
+    dialogCongif.height = "700px";
+    dialogCongif.data = element.id;
+    this.dialog.open(LicenseComponentComponent, dialogCongif);
   }
   
 

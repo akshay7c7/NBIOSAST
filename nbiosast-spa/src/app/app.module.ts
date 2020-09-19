@@ -78,6 +78,6 @@ export function tokenGetter() {
   ],
   providers: [AuthGuard,EditResolver,UserService,AuthService,BranchDetailsResolver,DriverDetailsResolver],
   bootstrap: [AppComponent],
-  entryComponents : [ConfirmDialogueComponent]
+  entryComponents : [ConfirmDialogueComponent, LicenseComponentComponent]
 })
 export class AppModule { }

@@ -34,8 +34,7 @@ export const appRoutes : Routes = [
             {path : 'adddriverdetails' , component : AddDriverDetailsComponent ,data: {roles: ['AccountAdminCreater','BranchAdminCreater','DriverCreater']}},
             {path : 'expirecards' , component : ExpireCardDetailsComponent},
             {path : 'editprofile' , component : EditProfileComponent, resolve:{editResolve:EditResolver}},
-            {path : 'editpassword' , component : EditPasswordComponent},
-            {path : 'license/:id', component : LicenseComponentComponent}
+            {path : 'editpassword' , component : EditPasswordComponent}
         ]
     },
     {path : '**' , component : LoginComponent}

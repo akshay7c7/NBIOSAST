@@ -37,7 +37,7 @@
         <mat-cell *matCellDef="let element">
           <button mat-icon-button color="warn" (click)="DeleteDriver(element)"><mat-icon>delete</mat-icon></button>
           <button mat-icon-button color="blue" (click)="EditDriver()"><mat-icon>edit</mat-icon></button>
-          <a target="_blank" [routerLink]="['/license', element.id]" ><mat-icon>print</mat-icon></a>
+          <button mat-icon-button color="blue" (click)="PrintDriver(element)" ><mat-icon>print</mat-icon></button>
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="loading">

@@ -5,6 +5,7 @@ import * as $ from "jquery";
 import { Router } from '@angular/router';
 import { DialogService } from '../_services/dialog.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SideNavService } from '../SideNav.service';
 
 @Component({
   selector: 'app-topbar',
@@ -18,7 +19,8 @@ export class TopbarComponent implements OnInit {
   constructor(public authService : AuthService, 
               private router : Router, 
               private snackbar : MatSnackBar,
-              private dialogService : DialogService) { }
+              private dialogService : DialogService,
+              private sidenav : SideNavService) { }
 
   ngOnInit()
   {
@@ -34,7 +36,7 @@ export class TopbarComponent implements OnInit {
 
   logout()
   {
-    this.dialogService.openConfirmDialog("Do you to Logout?").afterClosed().subscribe(
+    this.dialogService.openConfirmDialog("Do you wish to Logout?").afterClosed().subscribe(
       res=>{
         if(res)
         {
@@ -47,6 +49,10 @@ export class TopbarComponent implements OnInit {
       }
     )
   }
+
+  toggleRightSidenav() {
+    this.sidenav.toggle();
+ }
 
   
 

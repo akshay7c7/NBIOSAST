@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
+import { SideNavService } from '../SideNav.service';
 import { AuthService } from '../_services/auth.service';
 
 @Component({
@@ -7,13 +9,18 @@ import { AuthService } from '../_services/auth.service';
   styleUrls: ['../app.component.css']
 })
 export class SidebarComponent implements OnInit {
-
+  @ViewChild('drawer') public sidenav: MatDrawer;
   show : any;
-  constructor(private authService : AuthService) { }
+  showWhilePrint : any
+  constructor(private authService : AuthService, private sideNav : SideNavService) { }
 
   ngOnInit() {
 
-    
+    this.showWhilePrint = false;
+  }
+
+  ngAfterViewInit(): void {
+    this.sideNav.setSidenav(this.sidenav);
   }
 
   loggedIn()

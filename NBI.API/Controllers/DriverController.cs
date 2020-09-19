@@ -1,3 +1,6 @@
+using System.Xml.XPath;
+using System.Xml.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Reflection.Metadata;
 using System;
 using System.Collections.Generic;
@@ -76,11 +79,34 @@ namespace NBI.API.Controllers
         }
 
         [HttpGet("getAlldrivers")]
-        public async Task<IActionResult> GetAllDrivers(int id)
+        public async Task<IActionResult> GetAllDrivers()
         {
               var driver = await _context.Drivers.ToListAsync();
               //var driverToReturn = _mapper.Map<List<DriverReturnDto>>(driver);
               return Ok(driver);
         }
+        [HttpDelete("DeleteDriver/{id}")]
+        public async Task<IActionResult> DeleteDriver(int id)
+        {
+            var driverToDelete = await _context.Drivers.FirstOrDefaultAsync(x=>x.Id==id);
+            _context.Drivers.Remove(driverToDelete);
+            return Ok(new {message = "Deleted Successfully"});
+        }
+
+        [HttpPut("UpdateDriver/{id}")]
+        public async Task<IActionResult> EditDriver(int id)
+        {
+            var driverToDelete = await _context.Drivers.FirstOrDefaultAsync(x=>x.Id==id);
+            return Ok(new {message = "Updated Successfully"});
+        }
+
+         [HttpPut("ApproveDriver/{id}")]
+        public async Task<IActionResult> ApproveDriver(int id)
+        {
+            var driverToDelete = await _context.Drivers.FirstOrDefaultAsync(x=>x.Id==id);
+            return Ok(new {message = "Approved Successfully"});
+        }
+
+
     }
 }

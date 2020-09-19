@@ -1,0 +1,31 @@
+
+
+
+
+
+    <div class="card shadow mb-4">
+      <div class="card-body">
+        <form>
+            <img style="position:absolute;top:0.50in;left:0.50in;width:8.35in;height:4.77in" src= "{{'../../../../assets/img/LicenseTemplate.jpg" />
+            <div style="position:absolute;top:2.34in;left:2.03in;width:2.23in;line-height:0.24in;"><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000">{{driver['name']}}</span><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000"> </span><br/></div>
+            <div style="position:absolute;top:2.74in;left:2.02in;width:1.53in;line-height:0.24in;"><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000">{{driver['licenseNo']}}</span><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000"> </span><br/></div>
+            <div style="position:absolute;top:3.08in;left:2.02in;width:2.21in;line-height:0.22in;"><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000">{{driver['address']}}</span><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000"> </span><br/><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000"></span><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000"> </span><br/><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000"></span><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000"> </span><br/></div>
+            <div style="position:absolute;top:3.94in;left:1.93in;width:0.86in;line-height:0.24in;"><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000">{{driver['trainingStartDate']}}</span><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000"> </span><br/></div>
+            <div style="position:absolute;top:3.93in;left:3.44in;width:0.86in;line-height:0.24in;"><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000">{{driver['trainingEndDate']}}</span><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000"> </span><br/></div>
+            <div style="position:absolute;top:3.93in;left:5.96in;width:0.52in;line-height:0.24in;"><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000">{{driver['trainingPeriod']+" days"}}</span><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000"> </span><br/></div>
+            <div style="position:absolute;top:4.25in;left:1.90in;width:0.64in;line-height:0.24in;"><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000">{{driver['certificateNo']}}</span><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000"> </span><br/></div>
+            <div style="position:absolute;top:4.25in;left:3.78in;width:0.52in;line-height:0.24in;"><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000">{{"NA"}}</span><span style="font-style:normal;font-weight:bold;font-size:11pt;font-family:Times New Roman;color:#000000"> </span><br/></div>
+            <img *ngIf="isloading" style="position:absolute;top:2.27in;left:7.43in;width:0.97in;height:0.97in" id="image" [src]="'data:image/jpeg;base64,' + driver['photo']" >
+        </form>
+      </div>
+    </div>
+    
+
+    
+
+  
+
+ 
+        
+       
+          

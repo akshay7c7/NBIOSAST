@@ -14,6 +14,7 @@ import { EditResolver } from 'src/app/_resolvers/EditResolver';
 import { BranchDetailsResolver } from 'src/app/_resolvers/BranchDetailsResolver';
 import { DriverDetailsShowComponent } from 'src/app/DriverDetailsShow/DriverDetailsShow.component';
 import { DriverDetailsResolver } from 'src/app/_resolvers/DriverDetailsResolver';
+import { LicenseComponentComponent } from 'src/app/LicenseComponent/LicenseComponent.component';
 
 export const appRoutes : Routes = [
 
@@ -34,8 +35,7 @@ export const appRoutes : Routes = [
             {path : 'expirecards' , component : ExpireCardDetailsComponent},
             {path : 'editprofile' , component : EditProfileComponent, resolve:{editResolve:EditResolver}},
             {path : 'editpassword' , component : EditPasswordComponent},
-            {path : 'driverdetails', component : DriverDetailsShowComponent}
-
+            {path : 'license/:id', component : LicenseComponentComponent}
         ]
     },
     {path : '**' , component : LoginComponent}

@@ -77,12 +77,25 @@ export class AddDriverDetailsComponent implements OnInit {
 
   SaveDriver()
   {
+    
       const formData = new FormData();
       formData.append('Document', this.selectedDocument);
       formData.append('OnedayDoc', this.selectedOneDayDoc);
       formData.append('Photo', this.selectedPhoto);
       formData.append('Name', this.createDriverForm.get('Name').value);
       formData.append('Address', this.createDriverForm.get('Address').value);
+      formData.append('CertificateNo', this.createDriverForm.get('CertificateNo').value);
+      formData.append('LicenseNo', this.createDriverForm.get('LicenseNo').value);
+      formData.append('TransPortName', this.createDriverForm.get('TransPortName').value);
+      formData.append('TransPortAddress', this.createDriverForm.get('TransPortAddress').value);
+      formData.append('TransPortPhoneNo', this.createDriverForm.get('TransPortPhoneNo').value);
+      formData.append('Amount', this.createDriverForm.get('Amount').value);
+      formData.append('PaymentType', this.createDriverForm.get('PaymentType').value);
+      formData.append('DOB', this.createDriverForm.get('DOB').value);
+      formData.append('TrainingStartDate', this.createDriverForm.get('TrainingStartDate').value);
+      formData.append('TrainingEndDate', this.createDriverForm.get('TrainingEndDate').value);
+      formData.append('TrainingPeriod', this.createDriverForm.get('TrainingPeriod').value);
+      
 
       this.driverService.SaveDriver(formData)
       .subscribe(

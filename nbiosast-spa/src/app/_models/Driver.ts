@@ -14,6 +14,6 @@ export interface Driver{
     TrainingStartDate :Date,
     TrainingEndDate :Date,
     TrainingPeriod :number,
-    Photo :File,             
+    Photo :string,             
     OneDayDoc: File    
 }

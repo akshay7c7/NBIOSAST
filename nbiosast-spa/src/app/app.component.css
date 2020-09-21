@@ -168,8 +168,8 @@ cursor: pointer;
 .mat-column-status{
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 10% !important;
-  width: 10% !important;
+  flex: 0 0 12% !important;
+  width: 12% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
   justify-content: center;

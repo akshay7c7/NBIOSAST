@@ -73,9 +73,7 @@ namespace NBI.API.Controllers
                 return CreatedAtRoute("GetUser", new { Controller = "Users", id = userFromRepo.Id }, userToReturn);
 
             }
-                
             return BadRequest($"Changes not made for {id} ");
-
         }
 
         [Authorize(Roles="DriverCreater,BranchAdminCreater,AccountAdminCreater")]

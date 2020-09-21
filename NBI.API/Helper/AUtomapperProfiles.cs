@@ -20,6 +20,8 @@ namespace NBI.API.Helper
             CreateMap<DriverCreationDto, DriverReturnData>();
             CreateMap<DriverReturnFiles, DriverReturnDto>();
             CreateMap<DriverReturnFiles, Driver>();
+            CreateMap<Driver,DriverReturnDto>();
+            CreateMap<Driver,Driver>();
 
 
         }

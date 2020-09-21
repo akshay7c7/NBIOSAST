@@ -1,4 +1,4 @@
-<div  class="card-body" *ngIf="!addDriverMode">
+<div  class="card-body" [hidden]="!addDriverMode">
   <div class="mat-elevation-z8">
     <div>
       <a class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm" (click)="AddDriver()"><i class="fas fa-download fa-sm text-white-50"></i> Add Branch</a>
@@ -8,9 +8,9 @@
         <mat-icon *ngIf="searchKey" (click)="ClearIt()">close</mat-icon></button>
     </mat-form-field>
     </div>
-    <mat-table [dataSource] = "Driver">
+    <mat-table [dataSource] = "Driver" matSort>
       <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef>Driver Id</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Id</mat-header-cell>
         <mat-cell  *matCellDef="let element">{{element.id}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="name">
@@ -27,17 +27,19 @@
       </ng-container>
       <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
-        <mat-cell *matCellDef="let row" >
-          <button type="button" class="btn btn-outline-success" (click)="ApproveDriver()">Approve</button>
+        <mat-cell *matCellDef="let element" >
+          <button [disabled]="authService.decodedToken?.role=='DriverCreater'" [ngClass]="element.status=='Pending'? 'btn btn-danger': 'btn btn-success'" type="button" (click)="ChangeStatus(element)">{{element.status}}</button>
          
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button mat-icon-button color="warn" (click)="DeleteDriver(element)"><mat-icon>delete</mat-icon></button>
+
+          <button mat-icon-button color="blue" [disabled]="element.status=='Pending'" (click)="PrintDriver(element)" ><mat-icon>print</mat-icon></button>
           <button mat-icon-button color="blue" (click)="EditDriver()"><mat-icon>edit</mat-icon></button>
-          <button mat-icon-button color="blue" (click)="PrintDriver(element)" ><mat-icon>print</mat-icon></button>
+          <button mat-icon-button color="warn" (click)="DeleteDriver(element)"><mat-icon>delete</mat-icon></button>
+          
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="loading">

@@ -21,5 +21,6 @@ namespace NBI.API.Dtos
         public int TrainingPeriod { get; set; }
         public IFormFile Photo { get; set; }
         public IFormFile OneDayDoc {get;set;}
+        public string  Status { get; set; } = "Pending";
     }
 }

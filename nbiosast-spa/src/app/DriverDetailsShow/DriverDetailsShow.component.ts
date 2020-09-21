@@ -9,6 +9,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { DialogService } from '../_services/dialog.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LicenseComponentComponent } from '../LicenseComponent/LicenseComponent.component';
+import { AuthService } from '../_services/auth.service';
+import { DriverService } from '../_services/driver.service';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-DriverDetailsShow',
@@ -18,6 +21,7 @@ import { LicenseComponentComponent } from '../LicenseComponent/LicenseComponent.
 export class DriverDetailsShowComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator : MatPaginator;
+  @ViewChild(MatSort) sort : MatSort;
   
 
   DisplayedColumns : string[]= ['id','name','address','photo','status','actions'];
@@ -28,14 +32,22 @@ export class DriverDetailsShowComponent implements OnInit {
   
   constructor(private userService : UserService,
               private snacker : MatSnackBar, 
+              public authService : AuthService,
               private route : ActivatedRoute, 
               private router : Router,
               private http: HttpClient,
               private dialogService : DialogService,
               private dialog : MatDialog,
+              private driverService : DriverService
               ) { }
   
   ngOnInit() {
+    this.loadUsers();
+    this.Driver.sort = this.sort;
+  }
+
+  loadUsers()
+  {
     this.route.data
     .subscribe(
       data=>{
@@ -44,10 +56,12 @@ export class DriverDetailsShowComponent implements OnInit {
         this.showLoading = false;
       }
     )
+
   }
 
   ngAfterViewInit(): void {
     this.Driver.paginator = this.paginator;
+    
   }
 
   addDriverMode = false;
@@ -76,15 +90,64 @@ export class DriverDetailsShowComponent implements OnInit {
   }
 
 
-  ApproveDriver()
+  ChangeStatus(element)
   {
+    if(element.status=="Pending")
+    {
+      this.dialogService.openConfirmDialog("Do you want to APPROVE license for "+element.name).afterClosed().subscribe(
+        res=>{
+          if(res)
+          {
+            this.ApproveDriver(element.id);
+          }
+        }
+      )
+    }
+    else
+    {
+      this.dialogService.openConfirmDialog("Do you want change status to PENDING for "+element.name).afterClosed().subscribe(
+        res=>{
+          if(res)
+          {
+            this.PutOnPending(element.id);
+          }
+        }
+      )
 
+    }
+    
+    
+  }
+  ApproveDriver(id: any)
+  {
+      this.driverService.ApproveDriver(id)
+      .subscribe(
+        next=>{
+          this.snacker.open('Approved successfully','',{duration: 1000});
+          this.loadUsers();
+        },
+        error=>{
+          this.snacker.open(error.error,'',{duration: 1000});
+        }
+      )
   }
 
-  ConfirmPayment()
+  PutOnPending(id: any)
   {
-
+      this.driverService.PutOnPending(id)
+      .subscribe(
+        next=>{
+          this.snacker.open('Changed to Pending successfully','',{duration: 1000});
+          this.loadUsers();
+        },
+        error=>
+        {
+          this.snacker.open(error.error,'',{duration: 1000});
+        }
+        
+      )
   }
+
 
   DeleteDriver(element)
   {

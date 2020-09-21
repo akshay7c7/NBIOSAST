@@ -30,7 +30,7 @@ export const appRoutes : Routes = [
             {path : 'addaccount' , component : AddAccountAdminComponent , data: {roles: ['AccountAdminCreater']}},
             {path : 'branchdetails' , component : BranchDetailsShowComponent , data: {roles: ['AccountAdminCreater','BranchAdminCreater']}, resolve:{branchDetails:BranchDetailsResolver}} ,
             {path : 'addbranchdetails' , component : AddBranchAdminComponent ,data: {roles: ['AccountAdminCreater','BranchAdminCreater']}},
-            {path : 'driverdetails' , component : DriverDetailsShowComponent , data: {roles: ['AccountAdminCreater','BranchAdminCreater']}, resolve:{driverDetails:DriverDetailsResolver}} ,
+            {path : 'driverdetails' , component : DriverDetailsShowComponent , data: {roles: ['AccountAdminCreater','BranchAdminCreater','DriverCreater']}, resolve:{driverDetails:DriverDetailsResolver}} ,
             {path : 'adddriverdetails' , component : AddDriverDetailsComponent ,data: {roles: ['AccountAdminCreater','BranchAdminCreater','DriverCreater']}},
             {path : 'expirecards' , component : ExpireCardDetailsComponent},
             {path : 'editprofile' , component : EditProfileComponent, resolve:{editResolve:EditResolver}},

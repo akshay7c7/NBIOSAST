@@ -11,14 +11,32 @@ export class DriverService {
 constructor(private http: HttpClient) { }
 baseUrl = environment.apiUrl + 'driver/'; //http://localhost:5000/api/driver/
 
+
+  SaveDriver(driver : FormData)
+  {
+      return this.http.post(this.baseUrl +'AddDriver', driver);
+  }
+
+  getDriver(id: number)
+  {
+    return this.http.get(this.baseUrl + 'getdriver/'+id);
+  }
+
   getDrivers()
   {
     return this.http.get(this.baseUrl + 'getalldrivers');
   }
 
-  
-  SaveDriver(driver : FormData)
+  ApproveDriver(id : any)
   {
-      return this.http.post(this.baseUrl +'AddDriver', driver);
+    return this.http.put(this.baseUrl +'Approve/'+id,{})
   }
+
+  PutOnPending(id : any)
+  {
+    return this.http.put(this.baseUrl +'PutOnPending/'+id,{})
+  }
+
+  
+ 
 }

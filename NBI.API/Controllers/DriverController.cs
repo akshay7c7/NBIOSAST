@@ -1,7 +1,3 @@
-using System.Xml.XPath;
-using System.Xml.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Reflection.Metadata;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,37 +29,42 @@ namespace NBI.API.Controllers
         [HttpPost("AddDriver")]
         public async Task<IActionResult> AddDriver([FromForm]DriverCreationDto driverDto)
         {
-                System.Console.WriteLine(driverDto.Photo.Length);
-                System.Console.WriteLine(driverDto.Document.Length);
-                System.Console.WriteLine(Request.Form.Files.Count);
-                var reqFile1 = Request.Form.Files;
                 DriverReturnFiles driverFilesDto = new DriverReturnFiles();
                 
-                using(var ms = new MemoryStream())
+                if(driverDto.Document!=null)
                 {
-                    driverDto.Document.CopyTo(ms);
-                    var fileBytes = ms.ToArray();
-                    driverFilesDto.Document = Convert.ToBase64String(fileBytes);
+                     using(var ms = new MemoryStream())
+                    {
+                        driverDto.Document.CopyTo(ms);
+                        var fileBytes = ms.ToArray();
+                        driverFilesDto.Document = Convert.ToBase64String(fileBytes);
+                    }
+                }
+                
+                if(driverDto.OneDayDoc!=null)
+                {
+                    using (var ms1 = new MemoryStream())
+                    {
+                        driverDto.OneDayDoc.CopyTo(ms1);
+                        var fileBytes = ms1.ToArray();
+                        driverFilesDto.OneDayDoc = Convert.ToBase64String(fileBytes);
 
-                    
+                    }
                 }
-                using (var ms1 = new MemoryStream())
-                {
-                    driverDto.OneDayDoc.CopyTo(ms1);
-                    var fileBytes = ms1.ToArray();
-                    driverFilesDto.OneDayDoc = Convert.ToBase64String(fileBytes);
 
-                }
-                using(var ms2 = new MemoryStream())
+                if(driverDto.Photo!=null)
                 {
-                    driverDto.Photo.CopyTo(ms2);
-                    var fileBytes = ms2.ToArray();
-                    driverFilesDto.Photo = Convert.ToBase64String(fileBytes);
+                    using(var ms2 = new MemoryStream())
+                    {
+                        driverDto.Photo.CopyTo(ms2);
+                        var fileBytes = ms2.ToArray();
+                        driverFilesDto.Photo = Convert.ToBase64String(fileBytes);
+                    }                    
                 }
-                   
+
                 var drivertoSave = _mapper.Map<DriverReturnData>(driverDto);
                 var drivertoSave2 = _mapper.Map<Driver>(driverFilesDto);
-                var driverToCreate = _mapper.Map(drivertoSave, drivertoSave2 );
+                var driverToCreate = _mapper.Map(drivertoSave, drivertoSave2);
 
                 await _context.AddAsync(driverToCreate);
                 await _context.SaveChangesAsync();
@@ -81,9 +82,9 @@ namespace NBI.API.Controllers
         [HttpGet("getAlldrivers")]
         public async Task<IActionResult> GetAllDrivers()
         {
-              var driver = await _context.Drivers.ToListAsync();
-              //var driverToReturn = _mapper.Map<List<DriverReturnDto>>(driver);
-              return Ok(driver);
+              var driver  = await _context.Drivers.OrderByDescending(x=>x.Status=="Pending").ToListAsync();
+              var driverListToReturn = _mapper.Map<List<DriverReturnDto>>(driver);
+              return Ok(driverListToReturn);
         }
         [HttpDelete("DeleteDriver/{id}")]
         public async Task<IActionResult> DeleteDriver(int id)
@@ -94,18 +95,81 @@ namespace NBI.API.Controllers
         }
 
         [HttpPut("UpdateDriver/{id}")]
-        public async Task<IActionResult> EditDriver(int id)
+        public async Task<IActionResult> EditDriver(int id, [FromForm]DriverCreationDto driverDto)
         {
-            var driverToDelete = await _context.Drivers.FirstOrDefaultAsync(x=>x.Id==id);
-            return Ok(new {message = "Updated Successfully"});
+            var driverFromRepo = await _context.Drivers.FirstOrDefaultAsync(x=>x.Id==id);
+            if(driverFromRepo.Status=="Approved")
+            {
+                return BadRequest("You cannot edit an approved License");
+            }
+
+            DriverReturnFiles driverFilesInString = new DriverReturnFiles();
+                
+                if(driverDto.Document!=null)
+                {
+                     using(var ms = new MemoryStream())
+                    {
+                        driverDto.Document.CopyTo(ms);
+                        var fileBytes = ms.ToArray();
+                        driverFilesInString.Document = Convert.ToBase64String(fileBytes);
+                    }
+                }
+                
+                if(driverDto.OneDayDoc!=null)
+                {
+                    using (var ms1 = new MemoryStream())
+                    {
+                        driverDto.OneDayDoc.CopyTo(ms1);
+                        var fileBytes = ms1.ToArray();
+                        driverFilesInString.OneDayDoc = Convert.ToBase64String(fileBytes);
+
+                    }
+                }
+
+                if(driverDto.Photo!=null)
+                {
+                    using(var ms2 = new MemoryStream())
+                    {
+                        driverDto.Photo.CopyTo(ms2);
+                        var fileBytes = ms2.ToArray();
+                        driverFilesInString.Photo = Convert.ToBase64String(fileBytes);
+                    }                    
+                }
+
+                
+
+                var driverNormalData = _mapper.Map<DriverReturnData>(driverDto);
+                var driverFilesData  = _mapper.Map<Driver>(driverFilesInString);
+                driverFilesData.Id = driverFromRepo.Id;
+                var driverToUpdate   = _mapper.Map(driverNormalData, driverFilesData);
+                var dataToReturn = _mapper.Map(driverToUpdate, driverFromRepo);
+                if(await _context.SaveChangesAsync()>0)
+                {
+                    return Ok(dataToReturn);
+                }
+                return BadRequest("Update failed");
+                
         }
 
-         [HttpPut("ApproveDriver/{id}")]
+        [HttpPut("Approve/{id}")]
         public async Task<IActionResult> ApproveDriver(int id)
         {
             var driverToDelete = await _context.Drivers.FirstOrDefaultAsync(x=>x.Id==id);
-            return Ok(new {message = "Approved Successfully"});
+            await _context.Drivers.Where(x=>x.Id==id).ForEachAsync(z=>z.Status="Approved");
+            await _context.SaveChangesAsync();
+            return Ok(new {message = "Status changed to "+driverToDelete.Status+" for "+driverToDelete.Name});
         }
+
+        [HttpPut("PutOnPending/{id}")]
+        public async Task<IActionResult> PutOnPending(int id)
+        {
+            var driverToDelete = await _context.Drivers.FirstOrDefaultAsync(x=>x.Id==id);
+            await _context.Drivers.Where(x=>x.Id==id).ForEachAsync(z=>z.Status="Pending");
+            await _context.SaveChangesAsync();
+            return Ok(new {message = "Status changed to "+driverToDelete.Status+" for "+driverToDelete.Name});
+        }
+
+        
 
 
     }

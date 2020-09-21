@@ -7,7 +7,6 @@ namespace NBI.API.Models
     public class Driver
     {
         
-
         public int Id { get; set; }
         public string Name { get; set; }
         public string Document { get; set; }
@@ -25,6 +24,7 @@ namespace NBI.API.Models
         public int TrainingPeriod { get; set; }
         public string Photo { get; set; }
         public string OneDayDoc {get;set;}
+        public string Status { get; set; }
         
     }
 }

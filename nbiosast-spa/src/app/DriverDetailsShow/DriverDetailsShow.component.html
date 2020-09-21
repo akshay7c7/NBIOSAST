@@ -1,16 +1,16 @@
-<div  class="card-body" [hidden]="!addDriverMode">
+<div  class="card-body" *ngIf="!addDriverMode">
   <div class="mat-elevation-z8">
     <div>
-      <a class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm" (click)="AddDriver()"><i class="fas fa-download fa-sm text-white-50"></i> Add Branch</a>
+      <a class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm" (click)="AddDriver()"><i class="fas fa-download fa-sm text-white-50"></i> Add Driver</a>
       <mat-form-field class="d-none d-sm-inline-block search-form-field ml-5" floatLabel="never">
         <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
         <button mat-button matSuffix mat-icon-button area-label="Clear">
         <mat-icon *ngIf="searchKey" (click)="ClearIt()">close</mat-icon></button>
     </mat-form-field>
     </div>
-    <mat-table [dataSource] = "Driver" matSort>
+    <mat-table [dataSource] = "Driver" >
       <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Id</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>Driver Id</mat-header-cell>
         <mat-cell  *matCellDef="let element">{{element.id}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="name">
@@ -37,7 +37,7 @@
         <mat-cell *matCellDef="let element">
 
           <button mat-icon-button color="blue" [disabled]="element.status=='Pending'" (click)="PrintDriver(element)" ><mat-icon>print</mat-icon></button>
-          <button mat-icon-button color="blue" (click)="EditDriver()"><mat-icon>edit</mat-icon></button>
+          <button mat-icon-button color="blue" [disabled]="element.status=='Approved'"(click)="EditDriver()"><mat-icon>edit</mat-icon></button>
           <button mat-icon-button color="warn" (click)="DeleteDriver(element)"><mat-icon>delete</mat-icon></button>
           
         </mat-cell>

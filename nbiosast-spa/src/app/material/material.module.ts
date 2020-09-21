@@ -43,6 +43,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
 
@@ -98,6 +99,7 @@ import { CommonModule } from '@angular/common';
     OverlayModule,
     PortalModule,
     ScrollingModule,
+    NgxMatSelectSearchModule
   ],
   exports:[
     CommonModule,
@@ -147,6 +149,7 @@ import { CommonModule } from '@angular/common';
     OverlayModule,
     PortalModule,
     ScrollingModule,
+    NgxMatSelectSearchModule
   ]
 })
 export class MaterialModule { }

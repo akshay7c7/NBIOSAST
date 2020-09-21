@@ -25,6 +25,7 @@ namespace NBI.API.Models
         public string Photo { get; set; }
         public string OneDayDoc {get;set;}
         public string Status { get; set; }
+        public string BranchVisited { get; set; }
         
     }
 }

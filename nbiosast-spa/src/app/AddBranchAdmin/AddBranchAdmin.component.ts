@@ -1,8 +1,11 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { User } from '../_models/user';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { AuthService } from '../_services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { City } from 'src/assets/cities';
+import { map, startWith } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-AddBranchAdmin',
@@ -12,20 +15,54 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 export class AddBranchAdminComponent implements OnInit {
 
+
+  myControl = new FormControl();
+  city = this.cityService.cities;
+  cityNames=[];
+  filteredOptions: Observable<string[]>;
+
   @Output() cancelBranchCreation = new EventEmitter();
   
 
   constructor(private fb : FormBuilder, 
     private authService : AuthService,
-    private snackbar : MatSnackBar) { }
+    private snackbar : MatSnackBar,
+    private cityService: City ) { }
 
 ngOnInit() {
 
   this.CreateAddBranchAdmin();
+  this.filteredOptions = this.myControl.valueChanges.pipe(
+    startWith(''),
+    map(value => this._filter(value))
+  );
+  
+  //console.log(this.city);
+  
+  for (var product of this.city) {
+    //console.log(product.name);
+    this.cityNames.push(product.name);
+    }
+
+  //console.log(this.cityNames);  
+  
 }
 
+  
   createBranchAdminForm : FormGroup; 
   user : User;
+
+
+ 
+ private _filter(value: string)
+  { 
+    const filterValue = value.toLowerCase();
+    return this.cityNames.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+}
+
+  
+  
+
 
   CreateAddBranchAdmin()
   {
@@ -76,5 +113,7 @@ ngOnInit() {
     this.createBranchAdminForm.reset();
     this.cancelBranchCreation.emit(false);
   }
+
+ 
 
 }

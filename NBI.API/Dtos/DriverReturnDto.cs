@@ -9,5 +9,6 @@ namespace NBI.API.Dtos
         public string Address { get; set; } 
         public string Photo { get; set; }
         public string Status { get; set; }
+        public string BranchVisited { get; set; }
     }
 }

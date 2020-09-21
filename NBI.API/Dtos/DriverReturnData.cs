@@ -18,6 +18,7 @@ namespace NBI.API.Dtos
         public DateTime TrainingEndDate { get; set; }
         public int TrainingPeriod { get; set; }
         public string  Status { get; set; }
+        public string BranchVisited { get; set; }
 
     }
 }

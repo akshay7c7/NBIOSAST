@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { UserService } from '../_services/user.service';
 import { Driver } from '../_models/Driver';
 import { MatPaginator } from '@angular/material/paginator';
@@ -11,7 +11,6 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LicenseComponentComponent } from '../LicenseComponent/LicenseComponent.component';
 import { AuthService } from '../_services/auth.service';
 import { DriverService } from '../_services/driver.service';
-import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-DriverDetailsShow',
@@ -21,7 +20,6 @@ import { MatSort } from '@angular/material/sort';
 export class DriverDetailsShowComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator : MatPaginator;
-  @ViewChild(MatSort) sort : MatSort;
   
 
   DisplayedColumns : string[]= ['id','name','address','photo','status','actions'];
@@ -42,12 +40,6 @@ export class DriverDetailsShowComponent implements OnInit {
               ) { }
   
   ngOnInit() {
-    this.loadUsers();
-    this.Driver.sort = this.sort;
-  }
-
-  loadUsers()
-  {
     this.route.data
     .subscribe(
       data=>{
@@ -56,12 +48,26 @@ export class DriverDetailsShowComponent implements OnInit {
         this.showLoading = false;
       }
     )
+    this.addDriverMode = false;
+  }
+  fff:any;
+  loadUsers()
+  {
+    this.driverService.getDrivers()
+    .subscribe
+    (
+      data=>{
+        this.fff =  data;
+        this.Driver = new MatTableDataSource<any>(this.fff);
+        this.ngAfterViewInit();
+        this.showLoading = false;
+      }
+    )
 
   }
 
   ngAfterViewInit(): void {
     this.Driver.paginator = this.paginator;
-    
   }
 
   addDriverMode = false;
@@ -74,11 +80,9 @@ export class DriverDetailsShowComponent implements OnInit {
   {
     
     this.addDriverMode = creation;
+    this.loadUsers();
   }
 
- 
-  
-  
   ClearIt()
   {
     this.searchKey = "";
@@ -125,6 +129,7 @@ export class DriverDetailsShowComponent implements OnInit {
         next=>{
           this.snacker.open('Approved successfully','',{duration: 1000});
           this.loadUsers();
+          //this.ngOnInit();
         },
         error=>{
           this.snacker.open(error.error,'',{duration: 1000});
@@ -179,7 +184,8 @@ export class DriverDetailsShowComponent implements OnInit {
     dialogCongif.data = element.id;
     this.dialog.open(LicenseComponentComponent, dialogCongif);
   }
-  
+
+ 
 
 
 }

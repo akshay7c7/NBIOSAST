@@ -2,8 +2,9 @@ import { HttpHeaders } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Driver } from '../_models/Driver';
+import { User } from '../_models/user';
 import { AuthService } from '../_services/auth.service';
 import { DriverService } from '../_services/driver.service';
 
@@ -16,15 +17,24 @@ export class AddDriverDetailsComponent implements OnInit {
 
   @Output() cancelDriverCreation = new EventEmitter();
   createDriverForm : FormGroup;
+  public user:User = {} as User;
   constructor(
     private fb : FormBuilder, 
     private authService : AuthService,
     private router : Router,
     private snackbar : MatSnackBar,
-    private driverService : DriverService) { }
+    private driverService : DriverService,
+    private route : ActivatedRoute) { }
 
   ngOnInit() {
     this.CreateDriver();
+    this.route.data
+    .subscribe(
+      data=>
+      {
+        this.user = data['editResolve'];
+      }
+    )
   }
 
   CreateDriver()
@@ -95,6 +105,7 @@ export class AddDriverDetailsComponent implements OnInit {
       formData.append('TrainingStartDate', this.createDriverForm.get('TrainingStartDate').value);
       formData.append('TrainingEndDate', this.createDriverForm.get('TrainingEndDate').value);
       formData.append('TrainingPeriod', this.createDriverForm.get('TrainingPeriod').value);
+      formData.append('BranchVisited', this.user.city);
       
 
       this.driverService.SaveDriver(formData)

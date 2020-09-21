@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { City } from 'src/assets/cities';
 import { UserService } from '../_services/user.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class BranchDetailsShowComponent implements OnInit, AfterViewInit {
 
 @ViewChild(MatPaginator) paginator : MatPaginator;
 
-DisplayedColumns =["city","drivers", "nameAdmin", "userName", "email", "action"];
+DisplayedColumns =["city","count", "nameAdmin", "userName", "email", "action"];
 showLoading = true;
 branchAdmin : MatTableDataSource<any>
 searchKey;
@@ -24,6 +25,7 @@ searchKey;
               private route : ActivatedRoute, 
               private router : Router,
               private ngZone : NgZone,
+              private cityService : City
               ) { }
 
   ngOnInit() {
@@ -37,6 +39,8 @@ searchKey;
     )
     
   }
+
+  
 
   ngAfterViewInit(): void {
     this.branchAdmin.paginator = this.paginator;

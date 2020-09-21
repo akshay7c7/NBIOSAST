@@ -35,6 +35,7 @@ namespace NBI.API.Controllers
         [HttpGet("{id}", Name = "GetUser")]    
         public async Task<IActionResult> GetUser(int id)
         {
+            
             var userDetailsFromRepo = await _repo.GetUser(id);
             if (userDetailsFromRepo == null)
             {
@@ -54,8 +55,8 @@ namespace NBI.API.Controllers
             {
                 return NotFound("User not Found");
             }
-            var userDetailsToShow = _mapper.Map<List<UserForDisplayDetailDto>>(userDetailsFromRepo);
-            return Ok(userDetailsToShow);
+            //var userDetailsToShow = _mapper.Map<List<UserForDisplayDetailDto>>(userDetailsFromRepo);
+            return Ok(userDetailsFromRepo);
 
         }
 

@@ -82,7 +82,7 @@ namespace NBI.API.Controllers
         [HttpGet("getAlldrivers")]
         public async Task<IActionResult> GetAllDrivers()
         {
-              var driver  = await _context.Drivers.OrderByDescending(x=>x.Status=="Pending").ToListAsync();
+              var driver  = await _context.Drivers.OrderByDescending(s=>s.Status=="Pending").ThenByDescending(x=>x.Id).ToListAsync();
               var driverListToReturn = _mapper.Map<List<DriverReturnDto>>(driver);
               return Ok(driverListToReturn);
         }

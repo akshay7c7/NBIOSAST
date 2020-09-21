@@ -11,7 +11,7 @@ using NBI.API.HttoModels;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
 using Twilio;
-
+using NBI.API.Dtos;
 
 namespace NBI.API.Repository
 {
@@ -33,17 +33,29 @@ namespace NBI.API.Repository
             _context.Remove(entity);
         }
 
-        public async Task<User> GetUser(int id )
+        public  async Task<User> GetUser(int id )
         {
-           
+          
            var user = await _context.Users.FirstOrDefaultAsync(x=>x.Id==id);
            return user;
         }
-        public async Task<List<User>> GetUsers()
+        public  Task<List<UserForDisplayDetailDto>> GetUsers()
         {
+             var users =   from u in _context.Users 
+                            
+                            select new UserForDisplayDetailDto{
+                                Id = u.Id,
+                                UserName = u.UserName,
+                                Name = u.Name,
+                                Email = u.Email,
+                                PhoneNumber = u.PhoneNumber,
+                                City = u.City,
+                                Count = _context.Drivers.Where(x=>x.BranchVisited==u.City).Count()
+                            };
+            var news = users.ToListAsync();
            
-           var user = await _context.Users.ToListAsync();
-           return user;
+           //var user = await _context.Users.ToListAsync();
+           return news;
         }
 
         public async Task<List<UsersWithRoles>> GetUsersWithRoles()
@@ -87,16 +99,16 @@ namespace NBI.API.Repository
 
         public void SendWhatsappMessage(string username, string bodyHere)
         {
-            TwilioClient.Init(
-                "ACb252cc940bf685607e813059e7dd4ccb",
-                "48800abfc7dae8aeb9c34b7af038d256"
-            );
+            // TwilioClient.Init(
+            //     "ACb252cc940bf685607e813059e7dd4ccb",
+            //     "48800abfc7dae8aeb9c34b7af038d256"
+            // );
 
-            var message =  MessageResource.Create(
-                from :new PhoneNumber("whatsapp:+14155238886"),
-                to : new PhoneNumber("whatsapp:+919000017307"),
-                body: username + " "+ bodyHere + " "+DateTime.Now.ToString("dddd, dd MMMM") +" ,"+DateTime.Now.ToString("h:mm tt") 
-            );
+            // var message =  MessageResource.Create(
+            //     from :new PhoneNumber("whatsapp:+14155238886"),
+            //     to : new PhoneNumber("whatsapp:+919000017307"),
+            //     body: username + " "+ bodyHere + " "+DateTime.Now.ToString("dddd, dd MMMM") +" ,"+DateTime.Now.ToString("h:mm tt") 
+            // );
 
            
         }

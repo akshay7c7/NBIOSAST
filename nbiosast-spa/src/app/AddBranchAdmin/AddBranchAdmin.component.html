@@ -7,28 +7,43 @@
       <form [formGroup]="createBranchAdminForm" (ngSubmit)="RegisterBranchAdmin()">
         <div class="form-row">
 
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-5 ml-3">
             <label for="inputEmail4"> Name </label>
             <input type="text" class="form-control" [ngClass]="{'is-invalid': createBranchAdminForm.get('name').errors && createBranchAdminForm.get('name').touched}"
             formControlName="name" placeholder="Enter Name here" >
             <div class="invalid-feedback" *ngIf="createBranchAdminForm.get('name').touched && createBranchAdminForm.get('name').hasError('required')">Name is required</div>
           </div>
 
-        <div class="form-group col-md-4">
-          <label for="inputPassword4">City</label>
-          <input type="text" class="form-control" [ngClass]="{'is-invalid': createBranchAdminForm.get('city').errors && createBranchAdminForm.get('city').touched}"
-           formControlName="city" id="inputPassword4" placeholder="Enter city here">
-           <div class="invalid-feedback" *ngIf="createBranchAdminForm.get('city').touched && createBranchAdminForm.get('city').hasError('required')">City is required</div>
-        </div>
+          <div class="form-group col-md-5 ml-3" style="margin-right: -20px;">
+            <label for="inputPassword4">City</label>
+            <div>
+              <mat-form-field class="example-full-width">
+                <input formControlName="city" type="text" [ngClass]="{'is-invalid': createBranchAdminForm.get('city').errors && createBranchAdminForm.get('city').touched}"
+                       placeholder="Select City"
+                       matInput
+                       [formControl]="myControl"
+                       [matAutocomplete]="auto">
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <div class="invalid-feedback" *ngIf="createBranchAdminForm.get('city').touched && createBranchAdminForm.get('city').hasError('required')">City is required</div>
+          </div>
 
-          <div class="form-group col-md-4">
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-5 ml-3">
             <label for="inputPassword4">Email</label>
             <input type="email" class="form-control" [ngClass]="{'is-invalid': createBranchAdminForm.get('email').errors && createBranchAdminForm.get('email').touched}" 
             formControlName="email" placeholder="Enter Email here">
+            
             <div class="invalid-feedback" *ngIf="createBranchAdminForm.get('email').touched && createBranchAdminForm.get('email').hasError('required')">Email is required</div>
           </div>
 
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-5 ml-3">
             <label for="inputPassword4">Phone Number</label>
             <input type="text"  class="form-control" [ngClass]="{'is-invalid': createBranchAdminForm.get('phoneNumber').errors && createBranchAdminForm.get('phoneNumber').touched}"
              formControlName="phoneNumber" placeholder="Enter Phone number">
@@ -38,17 +53,18 @@
 
         <div class="form-row">
 
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-5 ml-3">
             <label for="inputPassword4">Username</label>
             <input type="text" class="form-control" formControlName="username" [ngClass]="{'is-invalid': createBranchAdminForm.get('username').errors && createBranchAdminForm.get('username').touched}"placeholder="Enter Username here">
             <div class="invalid-feedback">Please choose a username</div>
           </div>
 
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-5 ml-3">
             <label for="inputEmail4"> Password </label>
             <input type="password" class="form-control" [ngClass]="{'is-invalid': createBranchAdminForm.get('password').errors && createBranchAdminForm.get('password').touched}" 
             formControlName="password" placeholder="Password">
-
+          </div>
+          <div>
             <div class="invalid-feedback" 
               *ngIf="createBranchAdminForm.get('password').hasError('required')
               && createBranchAdminForm.get('password').touched">
@@ -65,7 +81,7 @@
               Password exceeds 8 character.</div>
           </div>
 
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-5 ml-3">
             <label for="inputEmail4"> Confirm Password </label>
             <input type="password" class="form-control" 
             [ngClass]="{'is-invalid': createBranchAdminForm.get('cpassword').errors
@@ -84,7 +100,7 @@
               Password must match.</div>
             </div>
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-5">
           <button type="submit" class="btn btn-primary">Submit</button>
           <button type = "cancel" class = "btn btn-danger ml-2" (click)="Cancel()">Cancel</button>
         </div>

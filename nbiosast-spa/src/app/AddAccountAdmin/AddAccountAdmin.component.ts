@@ -23,7 +23,7 @@ export class AddAccountAdminComponent implements OnInit {
   }
 
   createAccountAdminForm : FormGroup; //defining the form
-  user : User;
+  user : User ={} as User;
 
   CreateAddAccountAdmin()
   {
@@ -57,7 +57,7 @@ export class AddAccountAdminComponent implements OnInit {
         .subscribe(
           ()=>{this.snackbar.open('Account Admin Created Successfully','',{duration : 1000});
                 this.createAccountAdminForm.reset();},
-          error =>{this.snackbar.open(error.error,'',{duration : 1000})}
+          error =>{this.snackbar.open(error.error.title,'',{duration : 1000})}
         )
     }
 

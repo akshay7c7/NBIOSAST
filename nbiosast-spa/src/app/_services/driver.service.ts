@@ -37,6 +37,11 @@ baseUrl = environment.apiUrl + 'driver/'; //http://localhost:5000/api/driver/
     return this.http.put(this.baseUrl +'PutOnPending/'+id,{})
   }
 
+  DeleteDriver(id : any)
+  {
+    return this.http.delete(this.baseUrl + 'DeleteDriver/'+id);
+  }
+
   
  
 }

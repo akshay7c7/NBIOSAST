@@ -35,6 +35,9 @@ searchKey;
         let array = data['branchDetails'];
         this.branchAdmin = new MatTableDataSource(array);
         this.showLoading = false;
+      },
+      error=>{
+        this.snacker.open(error.error.title,'',{duration:1000})
       }
     )
     

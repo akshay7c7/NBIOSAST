@@ -102,7 +102,7 @@ ngOnInit() {
             this.createBranchAdminForm.reset();
               },
               
-          error =>{this.snackbar.open(error.error,'',{duration : 1000});}
+          error =>{this.snackbar.open(error.error.title,'',{duration : 1000});}
                   )
       } 
 

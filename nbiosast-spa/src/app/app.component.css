@@ -86,7 +86,7 @@ cursor: pointer;
   width: 20% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  justify-content: center;
+  
 
   word-break: break-word;
 
@@ -103,10 +103,10 @@ cursor: pointer;
   width: 30% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  justify-content: center;
+  
 
   word-break: break-word;
-  justify-content: center;
+  
 
   -ms-hyphens: auto;
   -moz-hyphens: auto;

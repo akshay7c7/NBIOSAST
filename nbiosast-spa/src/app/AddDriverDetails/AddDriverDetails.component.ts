@@ -7,6 +7,8 @@ import { Driver } from '../_models/Driver';
 import { User } from '../_models/user';
 import { AuthService } from '../_services/auth.service';
 import { DriverService } from '../_services/driver.service';
+import { UserService } from '../_services/user.service';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-AddDriverDetails',
@@ -17,22 +19,26 @@ export class AddDriverDetailsComponent implements OnInit {
 
   @Output() cancelDriverCreation = new EventEmitter();
   createDriverForm : FormGroup;
-  public user:User = {} as User;
+
+  public user: User = {} as User;
+
   constructor(
     private fb : FormBuilder, 
     private authService : AuthService,
     private router : Router,
     private snackbar : MatSnackBar,
     private driverService : DriverService,
-    private route : ActivatedRoute) { }
+    private route : ActivatedRoute,
+    private userService : UserService) { }
 
   ngOnInit() {
     this.CreateDriver();
-    this.route.data
+    this.userService.GetUserDetail(this.authService.decodedToken.nameid)
     .subscribe(
       data=>
       {
-        this.user = data['editResolve'];
+        console.log(data);
+        this.user = data;
       }
     )
   }
@@ -87,7 +93,6 @@ export class AddDriverDetailsComponent implements OnInit {
 
   SaveDriver()
   {
-    
       const formData = new FormData();
       formData.append('Document', this.selectedDocument);
       formData.append('OnedayDoc', this.selectedOneDayDoc);
@@ -115,7 +120,8 @@ export class AddDriverDetailsComponent implements OnInit {
           this.createDriverForm.reset();
             },
             
-        error =>{this.snackbar.open(error.error,'',{duration : 1000});}
+        error =>{
+          this.snackbar.open(error.error.title,'',{duration : 1000});}
                 )
 
   }

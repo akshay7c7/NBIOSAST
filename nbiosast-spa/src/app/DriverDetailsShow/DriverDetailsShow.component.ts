@@ -159,12 +159,23 @@ export class DriverDetailsShowComponent implements OnInit {
     this.dialogService.openConfirmDialog("Do you want to delete this Driver details?").afterClosed().subscribe(
       res=>{
         if(res)
-        {//call delete service api
-          this.Driver.data = this.Driver.data
+        { this.driverService.DeleteDriver(element.id)
+          .subscribe(
+            next=>{
+
+              this.Driver.data = this.Driver.data
           .filter((value,key)=>{
             return value.id != element.id;
           });
           this.snacker.open('Driver Deleted successfully','',{duration: 1000})
+
+            },
+            error=>{
+              this.snacker.open(error.error,'',{duration: 1000})
+            }
+
+          )
+          
         }
       }
     )

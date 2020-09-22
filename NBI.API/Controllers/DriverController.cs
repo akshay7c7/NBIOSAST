@@ -29,6 +29,7 @@ namespace NBI.API.Controllers
         [HttpPost("AddDriver")]
         public async Task<IActionResult> AddDriver([FromForm]DriverCreationDto driverDto)
         {
+            
                 DriverReturnFiles driverFilesDto = new DriverReturnFiles();
                 
                 if(driverDto.Document!=null)
@@ -91,6 +92,7 @@ namespace NBI.API.Controllers
         {
             var driverToDelete = await _context.Drivers.FirstOrDefaultAsync(x=>x.Id==id);
             _context.Drivers.Remove(driverToDelete);
+           await _context.SaveChangesAsync();
             return Ok(new {message = "Deleted Successfully"});
         }
 
@@ -167,6 +169,18 @@ namespace NBI.API.Controllers
             await _context.Drivers.Where(x=>x.Id==id).ForEachAsync(z=>z.Status="Pending");
             await _context.SaveChangesAsync();
             return Ok(new {message = "Status changed to "+driverToDelete.Status+" for "+driverToDelete.Name});
+        }
+
+
+        [HttpGet("TodayData")]
+        public async Task<IActionResult> GetTodaysData()
+        {
+            var todayDriverCount = await _context.Drivers.Where(x=>x.Created == DateTime.Today)
+                                    .Select(x=> Int32.Parse(x.Amount)).ToListAsync();
+            TodayDTO todayDto = new TodayDTO();
+            todayDto.CountOfDrivers = todayDriverCount.Count();
+            todayDto.TotalAmount = todayDriverCount.Sum(x=>x);
+            return Ok(todayDto);
         }
 
         

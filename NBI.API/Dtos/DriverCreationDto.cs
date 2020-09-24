@@ -24,6 +24,7 @@ namespace NBI.API.Dtos
         public string  Status { get; set; } = "Pending";
         public string BranchVisited { get; set; }
         public DateTime Created { get; set; }
+        public DateTime IfPrint { get; set; }
 
         public DriverCreationDto()
         {

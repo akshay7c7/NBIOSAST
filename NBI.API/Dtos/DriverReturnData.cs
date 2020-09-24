@@ -20,6 +20,7 @@ namespace NBI.API.Dtos
         public string  Status { get; set; }
         public string BranchVisited { get; set; }
         public DateTime Created { get; set; }
+        public bool IfPrint { get; set; }
 
     }
 }

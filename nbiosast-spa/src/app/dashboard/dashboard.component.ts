@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Dashboard } from '../_models/Dashboard';
 import { DashboardService } from '../_services/dashboard.service';
 
 @Component({
@@ -16,7 +17,7 @@ export class DashboardComponent implements OnInit {
     this.GetTodaysData();
   }
 
-  TodaysData :any={};
+  DashData :Dashboard={} as Dashboard;
   GetTodaysData()
   {
     
@@ -25,7 +26,7 @@ export class DashboardComponent implements OnInit {
       data=>
       {
         console.log(data)
-        this.TodaysData = data
+        this.DashData = data
         this.snackbar.open("Dashboard Updated",'',{duration:1000})
       },
       error=>

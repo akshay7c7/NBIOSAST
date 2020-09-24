@@ -31,8 +31,17 @@ export class LoginComponent implements OnInit {
       next => {
         this.snackbar.open('Logged in successfully','',{duration : 1000}) ;}, 
       error => {
-        this.snackbar.open(error.error,'',{duration:1000}) ;},
-  
+        if(error.statusText==="Unknown Error")
+        {
+          this.snackbar.open("Please check your internet connection",'',{duration:1000}) ;
+        }
+        
+        else{
+          this.snackbar.open(error.message,'',{duration:1000}) ;
+        }
+        
+      },
+        
       ()=> this.router.navigate(['/dashboard']));
   }
 

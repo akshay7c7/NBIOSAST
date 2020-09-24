@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using NBI.API.Data;
 using NBI.API.Dtos;
 using NBI.API.Models;
+using NBI.API.Helper;
 
 namespace NBI.API.Controllers
 {
@@ -171,16 +172,44 @@ namespace NBI.API.Controllers
             return Ok(new {message = "Status changed to "+driverToDelete.Status+" for "+driverToDelete.Name});
         }
 
+        [HttpPut("RecordPrint/{id}")]
+         public async Task<IActionResult> RecordPrint(int id)
+        {
+            var driverToPrint = await _context.Drivers.FirstOrDefaultAsync(x=>x.Id==id);
+            await _context.Drivers.Where(x=>x.Id==id).ForEachAsync(z=>z.PrintTime=DateTime.Today);
+            await _context.SaveChangesAsync();
+            return Ok(new {message = "Status changed to "+driverToPrint.PrintTime+" for "+driverToPrint.Name});
+        }
+
 
         [HttpGet("TodayData")]
         public async Task<IActionResult> GetTodaysData()
         {
-            var todayDriverCount = await _context.Drivers.Where(x=>x.Created == DateTime.Today)
-                                    .Select(x=> Int32.Parse(x.Amount)).ToListAsync();
-            TodayDTO todayDto = new TodayDTO();
-            todayDto.CountOfDrivers = todayDriverCount.Count();
-            todayDto.TotalAmount = todayDriverCount.Sum(x=>x);
-            return Ok(todayDto);
+            Dashboard dash = new Dashboard();
+            
+            dash.TodayDrivers = await _context.Drivers.Where(x=>x.Created == DateTime.Today).CountAsync();
+            var TotalAmount = await _context.Drivers.Where(x=>x.Created == DateTime.Today)
+                                    .Select(x=>x.Amount).ToListAsync();
+            dash.TodayAmount = TotalAmount.Sum(x=>x);
+            dash.TodayPrints = await _context.Drivers.Where(x=>x.PrintTime == DateTime.Today).CountAsync();
+
+            var weekdate = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
+
+            var WeekDrivers = await  _context.Drivers.Where(x=> x.Created >= weekdate)
+                                    .ToListAsync();
+            dash.WeekDrivers = WeekDrivers.Count();
+            var WeekAmount = await _context.Drivers.Where(x=> x.Created >= weekdate).Select(x=>x.Amount).ToListAsync();
+            dash.WeekAmount = WeekAmount.Sum(x=>x);
+            dash.WeekPrints = await _context.Drivers.Where(x=> x.PrintTime >= weekdate && x.PrintTime<=DateTime.Today)
+                                    .CountAsync();
+
+
+            dash.AnnualDrivers = await _context.Drivers.CountAsync();
+            var AnnualAmount = await _context.Drivers.Select(x=>x.Amount).ToListAsync();
+            dash.AnnualAmount = AnnualAmount.Sum(x=>x);
+            dash.AnnualPrints = await _context.Drivers.Where(x=>x.PrintTime != new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)).CountAsync();
+            
+            return Ok(dash);
         }
 
         

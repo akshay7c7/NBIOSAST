@@ -10,5 +10,6 @@ namespace NBI.API.Dtos
         public string Photo { get; set; }
         public string Status { get; set; }
         public string BranchVisited { get; set; }
+        public DateTime IfPrint { get; set; }
     }
 }

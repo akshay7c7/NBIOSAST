@@ -147,7 +147,23 @@ export class DriverDetailsShowComponent implements OnInit {
         },
         error=>
         {
-          this.snacker.open(error.error,'',{duration: 1000});
+          this.snacker.open(error.error.title,'',{duration: 1000});
+        }
+        
+      )
+  }
+
+  AddPrintDriverCount(id: any)
+  {
+      this.driverService.AddPrintDriverCount(id)
+      .subscribe(
+        next=>{
+          this.snacker.open('Print opened Successfully','',{duration: 1000});
+          this.loadUsers();
+        },
+        error=>
+        {
+          this.snacker.open(error.error.title,'',{duration: 1000});
         }
         
       )
@@ -171,7 +187,7 @@ export class DriverDetailsShowComponent implements OnInit {
 
             },
             error=>{
-              this.snacker.open(error.error,'',{duration: 1000})
+              this.snacker.open(error.error.title,'',{duration: 1000})
             }
 
           )
@@ -194,6 +210,7 @@ export class DriverDetailsShowComponent implements OnInit {
     dialogCongif.height = "700px";
     dialogCongif.data = element.id;
     this.dialog.open(LicenseComponentComponent, dialogCongif);
+    this.AddPrintDriverCount(element.id);
   }
 
  

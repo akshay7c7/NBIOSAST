@@ -15,7 +15,7 @@ namespace NBI.API.Models
         public string TransPortAddress { get; set; }
         public string TransPortPhoneNo { get; set; }
         public string Address { get; set; }
-        public string Amount { get; set; }
+        public int Amount { get; set; }
         public string PaymentType { get; set; }
         public DateTime DOB { get; set; }
         public DateTime TrainingStartDate { get; set; }
@@ -26,6 +26,7 @@ namespace NBI.API.Models
         public string Status { get; set; }
         public string BranchVisited { get; set; }
         public DateTime Created { get; set; }
+        public DateTime PrintTime { get; set; }
         
     }
 }

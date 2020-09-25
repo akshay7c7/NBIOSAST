@@ -20,7 +20,7 @@ export class DriverDetailsResolver implements Resolve<Driver>
 
         resolve(route : ActivatedRouteSnapshot):Observable<Driver>
         {
-            return this.driverService.getDrivers()
+            return this.driverService.getDrivers(null)
             .pipe(catchError(
                 error=>{
                     this.snackbar.open(error.error,'',{duration :1000});

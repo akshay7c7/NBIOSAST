@@ -1,23 +1,18 @@
-import { HttpHeaders } from '@angular/common/http';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Driver } from '../_models/Driver';
-import { User } from '../_models/user';
-import { AuthService } from '../_services/auth.service';
-import { DriverService } from '../_services/driver.service';
-import { UserService } from '../_services/user.service';
-import {map} from 'rxjs/operators';
+import { User } from 'src/app/_models/user';
+import { AuthService } from 'src/app/_services/auth.service';
+import { DriverService } from 'src/app/_services/driver.service';
+import { UserService } from 'src/app/_services/user.service';
 
 @Component({
-  selector: 'app-AddDriverDetails',
-  templateUrl: './AddDriverDetails.component.html',
-  styleUrls: ['../app.component.css']
+  selector: 'app-DriverDetailsEdit',
+  templateUrl: './DriverDetailsEdit.component.html',
+  styleUrls: ['../../app.component.css']
 })
-export class AddDriverDetailsComponent implements OnInit {
-
-  @Output() cancelDriverCreation = new EventEmitter();
+export class DriverDetailsEditComponent implements OnInit {
 
   createDriverForm : FormGroup;
   public user: User = {} as User;
@@ -64,17 +59,12 @@ export class AddDriverDetailsComponent implements OnInit {
         TrainingEndDate :['',Validators.required],
         TrainingPeriod :['',Validators.required],
         Photo :['',Validators.required],             
-        OneDayDoc: [''],
-        Validity: [''] 
+        OneDayDoc: [''] 
 
       }
 
     )
   }
-
-
-  
-  
 
   selectedDocument:File;
   selectedOneDayDoc: File;
@@ -95,12 +85,6 @@ export class AddDriverDetailsComponent implements OnInit {
   }
 
 
-  diffDays
-  GetValidity()
-  {
-    var time = new Date(this.createDriverForm.get('TrainingEndDate').value).getTime() - new Date(this.createDriverForm.get('TrainingStartDate').value).getTime();
-    this.diffDays = Math.ceil(time / (365 * 1000 * 3600 * 24)); 
-  }
 
   SaveDriver()
   {
@@ -124,15 +108,16 @@ export class AddDriverDetailsComponent implements OnInit {
       formData.append('BranchVisited', this.user.city);
       
 
-      this.driverService.SaveDriver(formData)
+      this.driverService.UpdateDriver(formData)
       .subscribe(
         ()=>{
-          this.snackbar.open('Driver details added Successfully','',{duration : 1000});
+          this.snackbar.open('Driver details updated Successfully','',{duration : 1000});
           this.createDriverForm.reset();
             },
             
         error =>{
-          this.snackbar.open(error.error.title,'',{duration : 1000});}
+          console.log(error);
+          this.snackbar.open(error.message,'',{duration : 1000});}
                 )
 
   }
@@ -140,14 +125,22 @@ export class AddDriverDetailsComponent implements OnInit {
   Cancel()
   {
     this.createDriverForm.reset();
-    this.cancelDriverCreation.emit(false);
-    this.router.navigate['/driverdetails'];
+    //this.cancelDriverCreation.emit(false);
+    console.log("Cancel");
+    this.router.navigate(['/driverdetails']);
   }
 
   doc=true;
   hideDoc(data)
   {
     this.doc = data;
+  }
+
+  diffDays
+  GetValidity()
+  {
+    var time = new Date(this.createDriverForm.get('TrainingEndDate').value).getTime() - new Date(this.createDriverForm.get('TrainingStartDate').value).getTime();
+    this.diffDays = Math.ceil(time / (365 * 1000 * 3600 * 24)); 
   }
 
 }

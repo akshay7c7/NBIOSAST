@@ -15,6 +15,8 @@ import { BranchDetailsResolver } from 'src/app/_resolvers/BranchDetailsResolver'
 import { DriverDetailsShowComponent } from 'src/app/DriverDetailsShow/DriverDetailsShow.component';
 import { DriverDetailsResolver } from 'src/app/_resolvers/DriverDetailsResolver';
 import { LicenseComponentComponent } from 'src/app/LicenseComponent/LicenseComponent.component';
+import { DriverDetailsEditComponent } from 'src/app/DriverDetailsShow/DriverDetailsEdit/DriverDetailsEdit.component';
+import { ReportsComponent } from 'src/app/Reports/Reports.component';
 
 export const appRoutes : Routes = [
 
@@ -30,11 +32,13 @@ export const appRoutes : Routes = [
             {path : 'addaccount' , component : AddAccountAdminComponent , data: {roles: ['AccountAdminCreater']}},
             {path : 'branchdetails' , component : BranchDetailsShowComponent , data: {roles: ['AccountAdminCreater','BranchAdminCreater']}, resolve:{branchDetails:BranchDetailsResolver}} ,
             {path : 'addbranchdetails' , component : AddBranchAdminComponent ,data: {roles: ['AccountAdminCreater','BranchAdminCreater']}},
-            {path : 'driverdetails' , component : DriverDetailsShowComponent , data: {roles: ['AccountAdminCreater','BranchAdminCreater','DriverCreater']}, resolve:{driverDetails:DriverDetailsResolver}} ,
+            {path : 'driverdetails' , component : DriverDetailsShowComponent , data: {roles: ['AccountAdminCreater','BranchAdminCreater','DriverCreater']}} ,
             {path : 'adddriverdetails' , component : AddDriverDetailsComponent ,data: {roles: ['AccountAdminCreater','BranchAdminCreater','DriverCreater']}},
             {path : 'expirecards' , component : ExpireCardDetailsComponent},
             {path : 'editprofile' , component : EditProfileComponent, resolve:{editResolve:EditResolver}},
-            {path : 'editpassword' , component : EditPasswordComponent}
+            {path : 'editpassword' , component : EditPasswordComponent},
+            {path : 'editdriver' , component : DriverDetailsEditComponent},
+            {path : 'reports', component: ReportsComponent}
         ]
     },
     {path : '**' , component : LoginComponent}

@@ -1,3 +1,4 @@
+
 <div  class="card-body" *ngIf="!addDriverMode">
   <div class="mat-elevation-z8">
     <div>
@@ -37,14 +38,14 @@
         <mat-cell *matCellDef="let element">
 
           <button mat-icon-button color="blue" [disabled]="element.status=='Pending'" (click)="PrintDriver(element)" ><mat-icon>print</mat-icon></button>
-          <button mat-icon-button color="blue" [disabled]="element.status=='Approved'"(click)="EditDriver()"><mat-icon>edit</mat-icon></button>
+          <button mat-icon-button color="blue" [disabled]="element.status=='Approved'"(click)="EditDriver(element)"><mat-icon>edit</mat-icon></button>
           <button mat-icon-button color="warn" (click)="DeleteDriver(element)"><mat-icon>delete</mat-icon></button>
           
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="loading">
         <mat-footer-cell *matFooterCellDef colspan="6" >
-          Loading data...
+          <app-Spinner></app-Spinner>
         </mat-footer-cell>
       </ng-container>
       <ng-container matColumnDef="noData">
@@ -55,7 +56,7 @@
       <mat-header-row *matHeaderRowDef="DisplayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns:DisplayedColumns;"></mat-row>
       <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':showLoading==false}"></mat-footer-row>
-      <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':Driver!=null}"></mat-footer-row>
+      <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':EmptyData==false}"></mat-footer-row>
     </mat-table>
     <mat-paginator [pageSizeOptions] ="[5, 10, 15, 20]" [pageSize]="5" showFirstLastButtons></mat-paginator>
   </div>

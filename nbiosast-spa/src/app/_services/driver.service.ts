@@ -17,14 +17,19 @@ baseUrl = environment.apiUrl + 'driver/'; //http://localhost:5000/api/driver/
       return this.http.post(this.baseUrl +'AddDriver', driver);
   }
 
+  UpdateDriver(driver : FormData)
+  {
+      return this.http.post(this.baseUrl +'UpdateDriver', driver);
+  }
+
   getDriver(id: number)
   {
     return this.http.get(this.baseUrl + 'getdriver/'+id);
   }
 
-  getDrivers()
+  getDrivers(branchName:string)
   {
-    return this.http.get(this.baseUrl + 'getalldrivers');
+    return this.http.get(this.baseUrl + 'getAlldrivers/'+branchName);
   }
 
   ApproveDriver(id : any)

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, Output, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Data, Router } from '@angular/router';
@@ -17,11 +17,11 @@ import { DriverService } from '../_services/driver.service';
   templateUrl: './DriverDetailsShow.component.html',
   styleUrls: ['../app.component.css']
 })
-export class DriverDetailsShowComponent implements OnInit {
+export class DriverDetailsShowComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator : MatPaginator;
   
-
+  EmptyData = false;
   DisplayedColumns : string[]= ['id','name','address','photo','status','actions'];
   showLoading = true;
   Driver: MatTableDataSource<any>
@@ -40,35 +40,39 @@ export class DriverDetailsShowComponent implements OnInit {
               ) { }
   
   ngOnInit() {
-    this.route.data
-    .subscribe(
-      data=>{
-        let array = data['driverDetails'];
-        this.Driver = new MatTableDataSource(array);
-        this.showLoading = false;
-      }
-    )
-    this.addDriverMode = false;
-  }
-  fff:any;
-  loadUsers()
-  {
-    this.driverService.getDrivers()
-    .subscribe
-    (
-      data=>{
-        this.fff =  data;
-        this.Driver = new MatTableDataSource<any>(this.fff);
-        this.ngAfterViewInit();
-        this.showLoading = false;
-      }
-    )
-
+    console.log("inside ngoninit");
   }
 
   ngAfterViewInit(): void {
-    this.Driver.paginator = this.paginator;
+    console.log("inside ngafter");
+    this.loadUsers();
   }
+
+  
+
+  fff:any;
+  branch: string = "ALL";
+  loadUsers()
+  {
+    console.log("inside loadusers");
+    this.driverService.getDrivers(this.branch)
+    .subscribe
+    (
+      data=>{
+        console.log(data);
+        this.fff =  data;
+        this.Driver = new MatTableDataSource<any>(this.fff);
+        this.showLoading = false;
+        this.Driver.paginator = this.paginator;
+        if(data==""){
+          this.EmptyData=true;
+        }
+      }
+    )
+
+  }
+
+
 
   addDriverMode = false;
 
@@ -197,10 +201,16 @@ export class DriverDetailsShowComponent implements OnInit {
     )
   }
 
-  EditDriver()
-  {
-
-  }
+  EditDriver(element)
+  {this.dialogService.openConfirmDialog("Do you want to edit this Driver details?").afterClosed().subscribe(
+    res=>{
+      if(res)
+      { 
+        this.router.navigate(['/editdriver'])
+      }
+    
+  })
+}
 
   PrintDriver(element)
   {

@@ -33,13 +33,18 @@ import { AuthService } from './_services/auth.service';
 import { DriverDetailsShowComponent } from './DriverDetailsShow/DriverDetailsShow.component';
 import { DriverDetailsResolver } from './_resolvers/DriverDetailsResolver';
 import { LicenseComponentComponent } from './LicenseComponent/LicenseComponent.component';
+import { DriverDetailsEditComponent } from './DriverDetailsShow/DriverDetailsEdit/DriverDetailsEdit.component';
+import { SpinnerComponent } from './Spinner/Spinner.component';
+import { SpinnerOverlayComponent } from './SpinnerOverlay/SpinnerOverlay.component';
+import { ReportsComponent } from './Reports/Reports.component';
+
 
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
 
 @NgModule({
-  declarations: [																
+  declarations: [																				
     AppComponent,
       DashboardComponent,
       SidebarComponent,
@@ -57,7 +62,11 @@ export function tokenGetter() {
       ConfirmDialogueComponent,
       EditPasswordComponent,
       DriverDetailsShowComponent,
-      LicenseComponentComponent
+      LicenseComponentComponent,
+      DriverDetailsEditComponent,
+      SpinnerComponent,
+      SpinnerOverlayComponent,
+      ReportsComponent
    ],
   imports: [
     BrowserModule,

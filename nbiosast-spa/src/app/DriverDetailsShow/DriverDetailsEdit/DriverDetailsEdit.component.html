@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="card shadow mb-4">
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">Add Driver Details</h6>
+      <h6 class="m-0 font-weight-bold text-primary">Edit Driver Details</h6>
     </div>
 
     <div class="card-body">
@@ -65,7 +65,7 @@
           </div>
           <div class="form-group col-md-4">
             <label for="inputPassword4">Training Expiry date</label>
-            <input type="date" (change)="GetValidity()" formControlName="TrainingEndDate" class="form-control"  placeholder="Enter expiry date here">
+            <input type="date" formControlName="TrainingEndDate" class="form-control"  placeholder="Enter expiry date here">
           </div>
           <div class="form-group col-md-4">
             <label for="inputPassword4">Validity</label>
@@ -102,7 +102,6 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
         <button  class="btn btn-primary ml-2" (click)="Cancel()">Cancel</button>
-
       </form>
     </div>
   </div>

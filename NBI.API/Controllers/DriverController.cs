@@ -81,12 +81,21 @@ namespace NBI.API.Controllers
               return Ok(driverFromRepo);
         }
 
-        [HttpGet("getAlldrivers")]
-        public async Task<IActionResult> GetAllDrivers()
-        {
-              var driver  = await _context.Drivers.OrderByDescending(s=>s.Status=="Pending").ThenByDescending(x=>x.Id).ToListAsync();
-              var driverListToReturn = _mapper.Map<List<DriverReturnDto>>(driver);
-              return Ok(driverListToReturn);
+        [HttpGet("getAlldrivers/{branchName}")]
+        public async Task<IActionResult> GetAllDrivers(string branchName)
+        {   
+            if(branchName=="ALL")
+            {
+            System.Console.WriteLine("inside"+branchName);
+            var driver  = await _context.Drivers.OrderByDescending(s=>s.Status=="Pending").ThenByDescending(x=>x.Id).ToListAsync();
+            var driverListToReturn = _mapper.Map<List<DriverReturnDto>>(driver);
+            return Ok(driverListToReturn); 
+            }
+
+            System.Console.WriteLine("outside"+branchName);
+            var driverF  = await _context.Drivers.Where(s=>s.Status=="Approved" && s.BranchVisited==branchName).OrderByDescending(x=>x.Id).ToListAsync();
+            var driverListToReturnF = _mapper.Map<List<DriverReturnDto>>(driverF);
+            return Ok(driverListToReturnF);
         }
         [HttpDelete("DeleteDriver/{id}")]
         public async Task<IActionResult> DeleteDriver(int id)
@@ -200,7 +209,7 @@ namespace NBI.API.Controllers
             dash.WeekDrivers = WeekDrivers.Count();
             var WeekAmount = await _context.Drivers.Where(x=> x.Created >= weekdate).Select(x=>x.Amount).ToListAsync();
             dash.WeekAmount = WeekAmount.Sum(x=>x);
-            dash.WeekPrints = await _context.Drivers.Where(x=> x.PrintTime >= weekdate && x.PrintTime<=DateTime.Today)
+            dash.WeekPrints = await _context.Drivers.Where(x=> x.PrintTime >= weekdate)
                                     .CountAsync();
 
 
@@ -211,6 +220,9 @@ namespace NBI.API.Controllers
             
             return Ok(dash);
         }
+
+
+
 
         
 

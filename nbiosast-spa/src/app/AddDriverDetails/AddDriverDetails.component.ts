@@ -149,5 +149,4 @@ export class AddDriverDetailsComponent implements OnInit {
   {
     this.doc = data;
   }
-
 }

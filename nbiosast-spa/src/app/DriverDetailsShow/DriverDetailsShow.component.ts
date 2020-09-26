@@ -193,9 +193,7 @@ export class DriverDetailsShowComponent implements OnInit, AfterViewInit {
             error=>{
               this.snacker.open(error.error.title,'',{duration: 1000})
             }
-
           )
-          
         }
       }
     )
@@ -208,7 +206,6 @@ export class DriverDetailsShowComponent implements OnInit, AfterViewInit {
       { 
         this.router.navigate(['/editdriver'])
       }
-    
   })
 }
 

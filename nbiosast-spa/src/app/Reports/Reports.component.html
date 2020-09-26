@@ -6,7 +6,7 @@
       <mat-icon *ngIf="searchKey" (click)="ClearIt()">close</mat-icon></button>
   </mat-form-field>
   </div>
-  <mat-table [dataSource] = "Driver" >
+  <mat-table [dataSource] = "Driver">
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef>Driver Id</mat-header-cell>
       <mat-cell  *matCellDef="let element">{{element.id}}</mat-cell>

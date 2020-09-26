@@ -5,7 +5,6 @@ namespace NBI.API.Dtos
         public int TodayDrivers { get; set; }
         public int TodayAmount { get; set; }
         public int TodayPrints { get; set; }
-
         public int WeekDrivers { get; set; }
         public int WeekAmount { get; set; }
         public int WeekPrints { get; set; }

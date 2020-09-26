@@ -8,7 +8,6 @@ import { Component, Input, OnInit } from '@angular/core';
 export class SpinnerComponent implements OnInit {
   message = 'Loading data...';
   constructor() { }
-
   ngOnInit() {
   }
 

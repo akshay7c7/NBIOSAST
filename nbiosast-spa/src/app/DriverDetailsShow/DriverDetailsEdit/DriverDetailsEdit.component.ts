@@ -16,7 +16,6 @@ export class DriverDetailsEditComponent implements OnInit {
 
   createDriverForm : FormGroup;
   public user: User = {} as User;
-
   constructor(
     private fb : FormBuilder, 
     private authService : AuthService,
@@ -37,13 +36,11 @@ export class DriverDetailsEditComponent implements OnInit {
       }
     )
   }
-
   CreateDriver()
   {
     this.createDriverForm = this.fb.group
     (
       {
-        
         Name :['',Validators.required],
         Document : ['',Validators.required],      
         CertificateNo : ['',Validators.required],

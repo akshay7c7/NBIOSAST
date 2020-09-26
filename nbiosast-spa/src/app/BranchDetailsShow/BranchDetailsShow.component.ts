@@ -64,10 +64,8 @@ searchKey;
   {
     this.searchKey = "";
   }
-  
   applyFilter()
   {
     this.branchAdmin.filter = this.searchKey.trim().toLowerCase();
   }
-
 }

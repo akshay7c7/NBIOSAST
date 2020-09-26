@@ -3,10 +3,8 @@
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary">Edit Driver Details</h6>
     </div>
-
     <div class="card-body">
       <form [formGroup] = "createDriverForm" (ngSubmit)="SaveDriver()">
-
         <div class="form-row">
           <div class="form-group col-md-4">
             <label for="inputEmail4"> Name </label>
@@ -36,10 +34,9 @@
             <input type="text" formControlName="TransPortPhoneNo" class="form-control"  placeholder="Enter Transport phoneNo. here">
           </div>
         </div>
-
         <div class="form-row">
           <div class="form-group col-md-4">
-            <label for="inputEmail4"> Date of Birth </label>
+            <label for="inputEmail4">Date of Birth </label>
             <input type="date" formControlName="DOB" class="form-control"  placeholder="Enter Transport Name here">
           </div>
           <div class="form-group col-md-4">

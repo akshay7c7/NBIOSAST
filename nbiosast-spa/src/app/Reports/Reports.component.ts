@@ -41,11 +41,10 @@ export class ReportsComponent implements OnInit  , AfterViewInit {
               ) { }
   
   ngOnInit() {
-    console.log("inside ngoninit");
+    
   }
 
   ngAfterViewInit(): void {
-    console.log("inside ngafter");
     this.loadUsers();
   }
 
@@ -53,7 +52,6 @@ export class ReportsComponent implements OnInit  , AfterViewInit {
   branch: string = "Mumbai";
   loadUsers()
   {
-    console.log("inside loadusers");
     this.driverService.getDrivers(this.branch)
     .subscribe
     (

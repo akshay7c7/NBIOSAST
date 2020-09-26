@@ -148,7 +148,6 @@ namespace NBI.API.Controllers
                     }                    
                 }
 
-                
 
                 var driverNormalData = _mapper.Map<DriverReturnData>(driverDto);
                 var driverFilesData  = _mapper.Map<Driver>(driverFilesInString);
@@ -190,12 +189,10 @@ namespace NBI.API.Controllers
             return Ok(new {message = "Status changed to "+driverToPrint.PrintTime+" for "+driverToPrint.Name});
         }
 
-
         [HttpGet("TodayData")]
         public async Task<IActionResult> GetTodaysData()
         {
             Dashboard dash = new Dashboard();
-            
             dash.TodayDrivers = await _context.Drivers.Where(x=>x.Created == DateTime.Today).CountAsync();
             var TotalAmount = await _context.Drivers.Where(x=>x.Created == DateTime.Today)
                                     .Select(x=>x.Amount).ToListAsync();
@@ -211,8 +208,6 @@ namespace NBI.API.Controllers
             dash.WeekAmount = WeekAmount.Sum(x=>x);
             dash.WeekPrints = await _context.Drivers.Where(x=> x.PrintTime >= weekdate)
                                     .CountAsync();
-
-
             dash.AnnualDrivers = await _context.Drivers.CountAsync();
             var AnnualAmount = await _context.Drivers.Select(x=>x.Amount).ToListAsync();
             dash.AnnualAmount = AnnualAmount.Sum(x=>x);

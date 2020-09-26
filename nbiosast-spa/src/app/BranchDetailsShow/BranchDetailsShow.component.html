@@ -42,7 +42,7 @@
       </ng-container>
       <ng-container matColumnDef="noData">
         <mat-footer-cell *matFooterCellDef colspan="6" >
-          No Data to display.
+          No Data to display...
         </mat-footer-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="DisplayedColumns"></mat-header-row>
@@ -52,6 +52,7 @@
     </mat-table>
     <mat-paginator [pageSizeOptions] ="[5, 10, 15, 20]" [pageSize]="5" showFirstLastButtons></mat-paginator>
   </div>
+  
 </div>
 <div *ngIf="addBranchAdminMode" class="container">
   <app-AddBranchAdmin  (cancelBranchCreation)="cancelBranchCreation($event)"></app-AddBranchAdmin>
